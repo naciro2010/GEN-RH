@@ -31,12 +31,51 @@
           <fluent-button id="themeToggle" appearance="transparent" aria-label="Basculer le thème">
             <span data-i18n="theme.light">Clair</span>
           </fluent-button>
+          <fluent-button id="excelModeToggle" appearance="transparent" aria-label="Mode Excel">Mode Excel</fluent-button>
           <fluent-button id="langToggle" appearance="transparent" aria-label="Changer de langue">
             FR / AR
           </fluent-button>
           <fluent-avatar id="userAvatar" name="A. Admin" aria-label="Utilisateur"></fluent-avatar>
         </div>
       </header>
+      <div class="ribbon" role="toolbar" aria-label="Ruban">
+        <fluent-tabs id="ribbonTabs" activeid="onglet-accueil">
+          <fluent-tab id="onglet-accueil">Accueil</fluent-tab>
+          <fluent-tab id="onglet-donnees">Données</fluent-tab>
+          <fluent-tab id="onglet-macros">Macros</fluent-tab>
+          <fluent-tab-panel>
+            <div class="ribbon-groups">
+              <div class="ribbon-group" aria-label="Navigation rapide">
+                <fluent-button appearance="accent" data-goto="#/">Tableau de bord</fluent-button>
+                <fluent-button appearance="accent" data-goto="#/recrutement">Recrutement</fluent-button>
+                <fluent-button appearance="accent" data-goto="#/salaries">Salariés</fluent-button>
+                <fluent-button appearance="accent" data-goto="#/paie">Paie</fluent-button>
+              </div>
+            </div>
+          </fluent-tab-panel>
+          <fluent-tab-panel>
+            <div class="ribbon-groups">
+              <div class="ribbon-group" aria-label="Exports">
+                <fluent-button id="rbExportEmployees" appearance="accent">Export salariés (XLSX)</fluent-button>
+                <fluent-button id="rbExportDataset" appearance="stealth">Exporter jeu JSON</fluent-button>
+              </div>
+              <div class="ribbon-group" aria-label="Imports">
+                <fluent-button id="rbImportDataset" appearance="stealth">Importer jeu JSON</fluent-button>
+                <input type="file" id="rbImportFile" accept="application/json" hidden />
+              </div>
+            </div>
+          </fluent-tab-panel>
+          <fluent-tab-panel>
+            <div class="ribbon-groups">
+              <div class="ribbon-group" aria-label="Macros">
+                <fluent-button id="rbRunPayroll" appearance="accent">Recalculer paie</fluent-button>
+                <fluent-button id="rbOfferLetter" appearance="stealth">Lettre d'offre</fluent-button>
+                <fluent-button id="rbRecordMacro" appearance="stealth">Enregistrer macro</fluent-button>
+              </div>
+            </div>
+          </fluent-tab-panel>
+        </fluent-tabs>
+      </div>
       <div class="app-shell">
         <nav class="app-nav" aria-label="Navigation principale">
           <div id="sideNav" class="nav-list" role="list"></div>
@@ -52,9 +91,19 @@
         </nav>
         <main id="app-content" role="main" tabindex="-1"></main>
       </div>
+      <div class="sheet-tabs" aria-label="Feuilles">
+        <fluent-tabs id="sheetTabs" activeid="tab-dashboard">
+          <fluent-tab id="tab-dashboard" data-route="#/">Tableau de bord</fluent-tab>
+          <fluent-tab id="tab-recrutement" data-route="#/recrutement">Recrutement</fluent-tab>
+          <fluent-tab id="tab-salaries" data-route="#/salaries">Salariés</fluent-tab>
+          <fluent-tab id="tab-paie" data-route="#/paie">Paie</fluent-tab>
+          <fluent-tab id="tab-docs" data-route="#/documents">Documents</fluent-tab>
+        </fluent-tabs>
+      </div>
     </div>
     <div id="toast-corner" role="status" aria-live="polite"></div>
     <fluent-dialog id="genericDialog" hidden></fluent-dialog>
     <script type="module" src="assets/js/app.js"></script>
+    <script type="module" src="assets/js/ribbon.js"></script>
   </body>
 </html>

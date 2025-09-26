@@ -44,6 +44,16 @@ body {
   z-index: 10;
 }
 
+/* Ribbon (Excel-like) */
+.ribbon {
+  border-bottom: 1px solid var(--app-border);
+  background: color-mix(in srgb, var(--app-bg) 96%, #fff 4%);
+  padding: 0.2rem 1rem 0.8rem;
+}
+.ribbon .ribbon-groups { display:flex; gap:1.2rem; align-items:center; }
+.ribbon .ribbon-group { display:flex; gap:0.4rem; padding:0.4rem; border:1px solid var(--app-border); border-radius: 8px; background: var(--neutral-layer-1); }
+.ribbon fluent-tabs::part(tablist) { gap: .4rem; }
+
 .app-brand {
   display: inline-flex;
   align-items: center;
@@ -154,6 +164,12 @@ body {
   display: grid;
   gap: 0.6rem;
 }
+
+/* Excel mode theming */
+.excel .brand-mark { background: linear-gradient(135deg, #217346, #1b5e36); }
+.excel .badge { background: rgba(33,115,70,.14); color: #217346; }
+.excel .kpi-card, .excel .data-card, .excel .kanban-column { border-color: rgba(33,115,70,.25); }
+.excel .nav-list fluent-button[appearance="accent"]::part(control) { background:#217346; }
 
 .quick-links {
   display: grid;
@@ -266,6 +282,19 @@ form.grid {
 .fluent-table td {
   padding: 0.6rem 0.5rem;
   border-bottom: 1px solid color-mix(in srgb, var(--app-border) 65%, transparent);
+}
+
+/* Excel-like grid styles */
+.excel .fluent-table th, .excel .fluent-table td {
+  border: 1px solid rgba(33,115,70,.2);
+}
+.fluent-table tbody tr:hover { background: color-mix(in srgb, var(--app-bg) 85%, #fff 15%); }
+
+/* Sheet tabs */
+.sheet-tabs {
+  border-top: 1px solid var(--app-border);
+  padding: .4rem 1rem;
+  background: var(--neutral-layer-1);
 }
 
 .timeline {

@@ -14,8 +14,11 @@
   </head>
   <body>
     <main>
-      <h1>Connexion</h1>
-      <p>Utilisez l’un des comptes de démonstration ou entrez votre email.</p>
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;">
+        <img src="assets/icon.svg" alt="Atlas" style="width:32px;height:32px;border-radius:8px"/>
+        <h1 style="margin:0">Atlas HR Suite</h1>
+      </div>
+      <p>Connectez-vous pour ouvrir le tableau de bord (démo). Vous pouvez utiliser les comptes ci-dessous.</p>
       <form id="loginForm">
         <label>Email
           <fluent-text-field type="email" name="email" required value="admin.rh@atlas.local"></fluent-text-field>
@@ -23,12 +26,18 @@
         <label>Mot de passe
           <fluent-text-field type="password" name="password" value="Atlas#2025" required></fluent-text-field>
         </label>
-        <div>
+        <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;">
           <fluent-button type="submit" appearance="accent">Se connecter</fluent-button>
           <fluent-anchor href="app.html" appearance="stealth">Entrer sans compte</fluent-anchor>
         </div>
       </form>
-      <p>Comptes rapides :<br/> public.admin@atlas.local / Public#2024 — privé: private.director@atlas.local / Private#2024</p>
+      <div style="margin-top:1rem;border-top:1px solid rgba(15,23,42,.12);padding-top:1rem;">
+        <p style="margin:.2rem 0">Comptes rapides:</p>
+        <ul style="margin:0;padding-left:1rem;">
+          <li>Secteur public: <code>public.admin@atlas.local</code> / <code>Public#2024</code></li>
+          <li>Secteur privé: <code>private.director@atlas.local</code> / <code>Private#2024</code></li>
+        </ul>
+      </div>
     </main>
     <script>
       const form = document.getElementById('loginForm');
