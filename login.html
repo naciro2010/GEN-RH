@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion – Atlas HR Suite</title>
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <script type="module" src="https://unpkg.com/@fluentui/web-components@2.5.6/dist/web-components.min.js"></script>
+    <link rel="stylesheet" href="assets/css/landing.css" />
+    <style>
+      main { max-width: 720px; margin: 5rem auto; padding: 2rem; border:1px solid rgba(15,23,42,.12); border-radius:16px; background:#fff; }
+      form { display:grid; gap: 1rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Connexion</h1>
+      <p>Utilisez l’un des comptes de démonstration ou entrez votre email.</p>
+      <form id="loginForm">
+        <label>Email
+          <fluent-text-field type="email" name="email" required value="admin.rh@atlas.local"></fluent-text-field>
+        </label>
+        <label>Mot de passe
+          <fluent-text-field type="password" name="password" value="Atlas#2025" required></fluent-text-field>
+        </label>
+        <div>
+          <fluent-button type="submit" appearance="accent">Se connecter</fluent-button>
+          <fluent-anchor href="app.html" appearance="stealth">Entrer sans compte</fluent-anchor>
+        </div>
+      </form>
+      <p>Comptes rapides :<br/> public.admin@atlas.local / Public#2024 — privé: private.director@atlas.local / Private#2024</p>
+    </main>
+    <script>
+      const form = document.getElementById('loginForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        const display = data.email.split('@')[0].replace('.', ' ').replace(/\b\w/g, (c)=>c.toUpperCase());
+        localStorage.setItem('atlasUser', JSON.stringify({ email: data.email, name: display }));
+        window.location.href = 'app.html#/'
+      });
+    </script>
+  </body>
+</html>

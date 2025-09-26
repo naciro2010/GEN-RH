@@ -1,60 +1,99 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlas HR Suite – Prototype Fluent</title>
+    <title>Atlas HR Suite – Gestion RH Maroc</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="assets/css/app.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script type="module" src="https://unpkg.com/@fluentui/web-components@2.5.6/dist/web-components.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.4.0/docx.umd.min.js" integrity="sha512-IvVdWvVManIeZDV4SSQdlqzTeWY5Avzkdxl3pNGdisz8Iky3Uczdlz7YT1Do1B4ezgmO6ijLJrVN6aL5soNqdQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha256-/smZFxLpy0X58F3RrgPf63eNbUsVTNff7kwh28ykPHk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="assets/css/landing.css" />
   </head>
   <body>
-    <div id="app">
-      <header class="app-header" role="banner">
-        <div class="app-brand">
-          <span class="brand-mark" aria-hidden="true">◆</span>
-          <div>
-            <span class="brand-title">Atlas HR Suite</span>
-            <span class="brand-subtitle" data-i18n="brand.subtitle">Gestion RH 360°</span>
-          </div>
+    <header class="hero">
+      <div class="hero__bar">
+        <div class="brand">
+          <img src="assets/icon.svg" alt="Atlas HR Suite" />
+          <span>Atlas HR Suite</span>
         </div>
-        <div class="header-middle">
-          <fluent-breadcrumb aria-label="Fil d'Ariane de navigation">
-            <fluent-breadcrumb-item href="#/">Tableau de bord</fluent-breadcrumb-item>
-            <fluent-breadcrumb-item id="breadcrumb-current" current></fluent-breadcrumb-item>
-          </fluent-breadcrumb>
-          <fluent-search id="app-search" placeholder="Rechercher" aria-label="Rechercher"></fluent-search>
-        </div>
-        <div class="header-actions">
-          <fluent-button id="themeToggle" appearance="transparent" aria-label="Basculer le thème">
-            <span data-i18n="theme.light">Clair</span>
-          </fluent-button>
-          <fluent-button id="langToggle" appearance="transparent" aria-label="Changer de langue">
-            FR / AR
-          </fluent-button>
-          <fluent-avatar id="userAvatar" name="A. Admin" aria-label="Utilisateur"></fluent-avatar>
-        </div>
-      </header>
-      <div class="app-shell">
-        <nav class="app-nav" aria-label="Navigation principale">
-          <div id="sideNav" class="nav-list" role="list"></div>
-          <div class="nav-footer">
-            <fluent-button id="exportData" appearance="accent" icon="arrow-export-20-regular">
-              <span data-i18n="nav.export">Exporter données</span>
-            </fluent-button>
-            <fluent-button id="importData" appearance="stealth">
-              <span data-i18n="nav.import">Importer données</span>
-              <input type="file" id="importFile" accept="application/json" hidden />
-            </fluent-button>
-          </div>
+        <nav class="hero__nav">
+          <a href="#modules">Modules</a>
+          <a href="#conformite">Conformité</a>
+          <a href="#tarifs">Tarifs</a>
+          <a href="#contact">Contact</a>
+          <fluent-anchor appearance="accent" href="login.html">Se connecter</fluent-anchor>
         </nav>
-        <main id="app-content" role="main" tabindex="-1"></main>
       </div>
-    </div>
-    <div id="toast-corner" role="status" aria-live="polite"></div>
-    <fluent-dialog id="genericDialog"></fluent-dialog>
-    <script type="module" src="assets/js/app.js"></script>
+      <div class="hero__content">
+        <h1>Suite RH moderne, pensée pour le Maroc</h1>
+        <p>Du recrutement à la paie et à la formation – conformité CNSS, AMO, CIMR et SIMPL‑IR intégrée. Une expérience Microsoft 365 élégante et productive.</p>
+        <div class="hero__cta">
+          <fluent-anchor appearance="accent" href="login.html">Accéder au tableau de bord</fluent-anchor>
+          <fluent-anchor appearance="stealth" href="#modules">Découvrir les modules</fluent-anchor>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="modules" class="section">
+        <h2>Modules couverts</h2>
+        <div class="cards">
+          <article class="card"><h3>Recrutement</h3><p>Kanban pipeline, fiches candidat FR/AR, consentement loi 09‑08.</p></article>
+          <article class="card"><h3>Onboarding</h3><p>Checklists IT/RH/Manager, génération contrat & attestation.</p></article>
+          <article class="card"><h3>Salariés</h3><p>Identité, CNIE, CNSS, RIB, contrats, ayants droit, CIMR.</p></article>
+          <article class="card"><h3>Temps & Pointage</h3><p>Imports XLSX/CSV, heures sup paramétrables, variables paie.</p></article>
+          <article class="card"><h3>Congés</h3><p>Demandes, soldes, fériés Maroc public/privé, validation 1‑2 niveaux.</p></article>
+          <article class="card"><h3>Paie Maroc</h3><p>CNSS/AMO/TFP, barème IR 2025, bulletins, exports CNSS & SIMPL‑IR.</p></article>
+          <article class="card"><h3>Formation</h3><p>Plan, sessions, présences, évaluations, suivi budget TFP.</p></article>
+          <article class="card"><h3>Documents</h3><p>Modèles DOCX, exports Excel, hooks Office / Graph.</p></article>
+        </div>
+      </section>
+
+      <section id="conformite" class="section alt">
+        <h2>Conformité & Sécurité</h2>
+        <ul class="list">
+          <li>Protection des données personnelles – Loi 09‑08 (CNDP)</li>
+          <li>Processus CNSS / Damancom & AMO – prêts pour l’EDI</li>
+          <li>Exports SIMPL‑IR et génération XML EDI</li>
+          <li>Hébergement Maroc ou cloud public – chiffrement au repos</li>
+        </ul>
+      </section>
+
+      <section id="tarifs" class="section">
+        <h2>Tarification simple</h2>
+        <div class="pricing">
+          <div class="price-card">
+            <h3>Essentiel</h3>
+            <p class="price">Gratuit</p>
+            <ul>
+              <li>Recrutement & salariés</li>
+              <li>Imports/Exports XLSX</li>
+              <li>Templates DOCX</li>
+            </ul>
+          </div>
+          <div class="price-card highlight">
+            <h3>Entreprise</h3>
+            <p class="price">Sur devis</p>
+            <ul>
+              <li>Paie complète Maroc</li>
+              <li>Connecteurs Office Graph</li>
+              <li>Support prioritaire</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section alt">
+        <h2>Contact</h2>
+        <p>Demandez une démo à l’équipe Atlas : <a href="mailto:support@atlas-suite.ma">support@atlas-suite.ma</a></p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© ${new Date().getFullYear()} Atlas HR Suite — Tous droits réservés.</span>
+      <a href="login.html">Entrer dans l’application</a>
+    </footer>
   </body>
 </html>

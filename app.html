@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atlas HR Suite – Prototype Fluent</title>
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/app.css" />
+    <script type="module" src="https://unpkg.com/@fluentui/web-components@2.5.6/dist/web-components.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.4.0/docx.umd.min.js" integrity="sha512-IvVdWvVManIeZDV4SSQdlqzTeWY5Avzkdxl3pNGdisz8Iky3Uczdlz7YT1Do1B4ezgmO6ijLJrVN6aL5soNqdQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha256-/smZFxLpy0X58F3RrgPf63eNbUsVTNff7kwh28ykPHk=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="app">
+      <header class="app-header" role="banner">
+        <div class="app-brand">
+          <span class="brand-mark" aria-hidden="true">◆</span>
+          <div>
+            <span class="brand-title">Atlas HR Suite</span>
+            <span class="brand-subtitle" data-i18n="brand.subtitle">Gestion RH 360°</span>
+          </div>
+        </div>
+        <div class="header-middle">
+          <fluent-breadcrumb aria-label="Fil d'Ariane de navigation">
+            <fluent-breadcrumb-item href="#/">Tableau de bord</fluent-breadcrumb-item>
+            <fluent-breadcrumb-item id="breadcrumb-current" current></fluent-breadcrumb-item>
+          </fluent-breadcrumb>
+          <fluent-search id="app-search" placeholder="Rechercher" aria-label="Rechercher"></fluent-search>
+        </div>
+        <div class="header-actions">
+          <fluent-button id="themeToggle" appearance="transparent" aria-label="Basculer le thème">
+            <span data-i18n="theme.light">Clair</span>
+          </fluent-button>
+          <fluent-button id="langToggle" appearance="transparent" aria-label="Changer de langue">
+            FR / AR
+          </fluent-button>
+          <fluent-avatar id="userAvatar" name="A. Admin" aria-label="Utilisateur"></fluent-avatar>
+        </div>
+      </header>
+      <div class="app-shell">
+        <nav class="app-nav" aria-label="Navigation principale">
+          <div id="sideNav" class="nav-list" role="list"></div>
+          <div class="nav-footer">
+            <fluent-button id="exportData" appearance="accent" icon="arrow-export-20-regular">
+              <span data-i18n="nav.export">Exporter données</span>
+            </fluent-button>
+            <fluent-button id="importData" appearance="stealth">
+              <span data-i18n="nav.import">Importer données</span>
+              <input type="file" id="importFile" accept="application/json" hidden />
+            </fluent-button>
+          </div>
+        </nav>
+        <main id="app-content" role="main" tabindex="-1"></main>
+      </div>
+    </div>
+    <div id="toast-corner" role="status" aria-live="polite"></div>
+    <fluent-dialog id="genericDialog" hidden></fluent-dialog>
+    <script type="module" src="assets/js/app.js"></script>
+  </body>
+</html>

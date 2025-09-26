@@ -11,6 +11,7 @@ const langToggle = document.getElementById('langToggle');
 const exportButton = document.getElementById('exportData');
 const importButton = document.getElementById('importData');
 const importFile = document.getElementById('importFile');
+const userAvatar = document.getElementById('userAvatar');
 
 const routeMap = new Map(routes.map((route) => [route.path, route]));
 const defaultRoute = routes[0];
@@ -116,6 +117,36 @@ const initApp = () => {
   const state = getData();
   setLocale(state.settings.locale || 'fr');
   ensureDir(state.settings.rtl);
+  try {
+    const user = JSON.parse(localStorage.getItem('atlasUser') || 'null');
+    if (user && userAvatar) {
+      userAvatar.setAttribute('name', user.name || 'Utilisateur');
+      userAvatar.title = user.email || '';
+    }
+  } catch {}
+  // Ensure demo freshness: add one absence today and one future training session if missing
+  const today = new Date().toISOString().slice(0, 10);
+  const hasTodayAttendance = state.attendance?.some((a) => a.date === today);
+  if (!hasTodayAttendance && state.employees?.length) {
+    setData((draft) => {
+      draft.attendance.push({
+        id: `ATT-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
+        employeeId: draft.employees[0].id,
+        date: today,
+        status: 'Absent',
+        motif: 'Maladie'
+      });
+    });
+  }
+  const hasFutureTraining = state.formations?.some((f) => f.sessions?.some((s) => new Date(s.date) >= new Date()));
+  if (!hasFutureTraining && state.formations?.length) {
+    setData((draft) => {
+      const target = draft.formations[0];
+      const d = new Date();
+      d.setDate(d.getDate() + 14);
+      target.sessions.push({ date: d.toISOString().slice(0, 10), lieu: 'Casablanca', participants: 15, presence: 0, evaluation: 0 });
+    });
+  }
   buildNav();
   renderRoute(getHashPath());
   applyTranslations(document.body);

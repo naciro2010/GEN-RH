@@ -506,8 +506,8 @@ export const defaultData = {
       budget: 60000,
       cote: 'RH',
       sessions: [
-        { date: '2024-05-20', lieu: 'Casablanca', participants: 12, presence: 10, evaluation: 4.5 },
-        { date: '2024-06-15', lieu: 'Rabat', participants: 10, presence: 9, evaluation: 4.2 }
+        { date: '2026-05-20', lieu: 'Casablanca', participants: 12, presence: 10, evaluation: 4.5 },
+        { date: '2026-06-15', lieu: 'Rabat', participants: 10, presence: 9, evaluation: 4.2 }
       ]
     },
     {
@@ -516,7 +516,7 @@ export const defaultData = {
       budget: 45000,
       cote: 'IT',
       sessions: [
-        { date: '2024-05-27', lieu: 'En ligne', participants: 8, presence: 8, evaluation: 4.7 }
+        { date: '2026-05-27', lieu: 'En ligne', participants: 8, presence: 8, evaluation: 4.7 }
       ]
     },
     {
@@ -525,7 +525,7 @@ export const defaultData = {
       budget: 32000,
       cote: 'Finance',
       sessions: [
-        { date: '2024-04-30', lieu: 'Casablanca', participants: 6, presence: 6, evaluation: 4.9 }
+        { date: '2026-04-30', lieu: 'Casablanca', participants: 6, presence: 6, evaluation: 4.9 }
       ]
     },
     {
@@ -534,7 +534,7 @@ export const defaultData = {
       budget: 15000,
       cote: 'Compliance',
       sessions: [
-        { date: '2024-03-19', lieu: 'Teams', participants: 30, presence: 26, evaluation: 4.0 }
+        { date: '2026-03-19', lieu: 'Teams', participants: 30, presence: 26, evaluation: 4.0 }
       ]
     }
   ],
