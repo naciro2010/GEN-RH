@@ -233,8 +233,18 @@ const heroButtons = document.querySelectorAll(".hero-actions .btn");
 const projectTimeline = document.getElementById("projectTimeline");
 const compliancePanel = document.getElementById("compliancePanel");
 const testimonialTrack = document.getElementById("testimonialTrack");
-const themeToggle = document.getElementById("themeToggle");
 const currentYear = document.getElementById("currentYear");
+const loginLinks = document.querySelectorAll('a[href$="login.html"]');
+
+let currentScope = "public";
+
+const registerReveal = () => {
+  window.AtlasUI?.observeReveal?.(
+    document.querySelectorAll(
+      ".solution-card, .module-card, .dashboard-card, .testimonial-card"
+    )
+  );
+};
 
 const renderMetrics = (scope = "public") => {
   const data = metricsData.find((item) => item.scope === scope) ?? metricsData[0];
@@ -265,10 +275,12 @@ const renderSolutions = () => {
       `
     )
     .join("");
+  registerReveal();
 };
 
 const renderModules = (scope = "public") => {
   const data = modulesData[scope];
+  currentScope = scope;
   moduleHighlights.innerHTML = data.highlights
     .map(
       (highlight) => `
@@ -293,6 +305,7 @@ const renderModules = (scope = "public") => {
       `
     )
     .join("");
+  registerReveal();
 };
 
 const renderTimeline = () => {
@@ -334,6 +347,7 @@ const renderTestimonials = () => {
       `
     )
     .join("");
+  registerReveal();
 };
 
 const setActiveScopeButton = (scope) => {
@@ -365,26 +379,12 @@ const animateCounters = () => {
   });
 };
 
-const toggleTheme = () => {
-  document.body.classList.toggle("dark");
-  const mode = document.body.classList.contains("dark") ? "dark" : "light";
-  localStorage.setItem("atlas-theme", mode);
-};
-
-const loadTheme = () => {
-  const savedTheme = localStorage.getItem("atlas-theme");
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark");
-  }
-};
-
 renderMetrics();
 renderSolutions();
 renderModules();
 renderTimeline();
 renderCompliance();
 renderTestimonials();
-loadTheme();
 if (currentYear) currentYear.textContent = new Date().getFullYear();
 animateCounters();
 
@@ -401,6 +401,7 @@ scopeButtons.forEach((button) => {
 heroButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const { scope } = button.dataset;
+    sessionStorage.setItem("atlas-preferred-scope", scope);
     renderModules(scope);
     renderMetrics(scope);
     setActiveScopeButton(scope);
@@ -409,15 +410,11 @@ heroButtons.forEach((button) => {
   });
 });
 
-if (themeToggle) {
-  themeToggle.addEventListener("click", () => {
-    toggleTheme();
-    themeToggle.setAttribute(
-      "aria-label",
-      document.body.classList.contains("dark") ? "Activer le thème clair" : "Activer le thème sombre"
-    );
+loginLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    sessionStorage.setItem("atlas-preferred-scope", currentScope);
   });
-}
+});
 
 document.querySelector(".contact-form")?.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -429,20 +426,4 @@ document.querySelector(".contact-form")?.addEventListener("submit", (event) => {
   );
   form.reset();
 });
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.1 }
-);
-
-document.querySelectorAll(".solution-card, .module-card, .dashboard-card, .testimonial-card").forEach((el) => {
-  el.classList.add("reveal");
-  observer.observe(el);
-});
+registerReveal();

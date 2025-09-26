@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion – Atlas HR Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/login.css" />
+  </head>
+  <body data-root="../">
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">◆</span>
+        <span class="brand-name">Atlas HR Suite</span>
+      </div>
+      <nav class="top-nav" aria-label="Navigation principale">
+        <a href="../index.html">Accueil</a>
+        <a href="../index.html#solutions">Solutions</a>
+        <a href="../index.html#dashboard">Tableau de bord</a>
+      </nav>
+      <div class="top-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+          <span class="toggle-icon" aria-hidden="true"></span>
+        </button>
+        <a class="btn btn-outline" href="../index.html">Retour au site</a>
+      </div>
+    </header>
+
+    <main class="auth-layout">
+      <section class="auth-panel" aria-labelledby="panelTitle">
+        <div class="auth-panel__content">
+          <span class="badge">Suite immersive</span>
+          <h1 id="panelTitle">Une expérience Microsoft-like pour piloter vos talents</h1>
+          <p>
+            Portails personnalisés, intégration Microsoft 365 et dashboards prêts à l’emploi
+            pour le secteur public et privé. Connectez-vous et prenez les commandes
+            de votre environnement Atlas en quelques secondes.
+          </p>
+          <ul class="auth-panel__list">
+            <li>Navigation moderne inspirée de Microsoft 365</li>
+            <li>Workflows sécurisés et auditables</li>
+            <li>Analyses temps réel sur vos indicateurs clés</li>
+          </ul>
+        </div>
+        <div class="auth-panel__footer">
+          <span>Besoin d’aide ?</span>
+          <a href="mailto:support@atlas-suite.ma">support@atlas-suite.ma</a>
+        </div>
+      </section>
+
+      <section class="auth-card card" aria-labelledby="loginTitle">
+        <div class="auth-card__header">
+          <h2 id="loginTitle">Connexion à l’espace Atlas</h2>
+          <p>Utilisez l’un des comptes de démonstration pour explorer les portails.</p>
+          <div class="auth-status" id="authStatus" role="status" aria-live="polite"></div>
+        </div>
+
+        <form class="auth-form" id="loginForm" novalidate>
+          <label>
+            <span>Adresse e-mail</span>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="prenom.nom@organisation.ma"
+              autocomplete="username"
+              required
+            />
+          </label>
+          <label>
+            <span>Mot de passe</span>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Mot de passe"
+              autocomplete="current-password"
+              required
+            />
+          </label>
+          <div class="auth-form__actions">
+            <label class="remember">
+              <input type="checkbox" id="remember" />
+              <span>Rester connecté sur cet appareil</span>
+            </label>
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+          </div>
+        </form>
+
+        <section class="demo-accounts" aria-label="Comptes de démonstration">
+          <h3>Comptes disponibles</h3>
+          <ul id="accountList"></ul>
+        </section>
+
+        <footer class="auth-card__footer">
+          <span>En vous connectant vous acceptez nos conditions d’utilisation.</span>
+          <a href="../index.html#contact">Contacter l’équipe Atlas</a>
+        </footer>
+      </section>
+    </main>
+
+    <script src="../assets/js/base.js" defer></script>
+    <script src="../assets/js/login.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tableau de bord – Secteur privé</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/dashboard-shared.css" />
+    <link rel="stylesheet" href="../assets/css/dashboard-private.css" />
+  </head>
+  <body class="dashboard-body dashboard-body--private" data-root="../">
+    <div class="app-shell app-shell--private">
+      <aside class="app-shell__sidebar" aria-label="Navigation du portail privé">
+        <div class="app-shell__brand">
+          <a href="../index.html">Atlas HR Suite</a>
+          <span>Portail secteur privé</span>
+        </div>
+        <nav class="app-shell__nav">
+          <button class="nav-item" data-nav-target="overview" data-active="true">Pilotage global</button>
+          <button class="nav-item" data-nav-target="talents">Talents & performance</button>
+          <button class="nav-item" data-nav-target="engagement">Engagement & QVT</button>
+          <button class="nav-item" data-nav-target="paie">Paie & conformité</button>
+          <button class="nav-item" data-nav-target="analytics">Analytics</button>
+        </nav>
+        <div class="app-shell__footer">
+          <span>Connecteurs actifs : Microsoft 365, SAP, Sage</span>
+          <a href="mailto:support@atlas-suite.ma">Support Atlas</a>
+        </div>
+      </aside>
+
+      <main class="app-shell__main">
+        <header class="page-header">
+          <div class="page-header__titles">
+            <span class="scope-badge">Secteur privé</span>
+            <h1>Suite RH – Pilotage entreprises multi-sites</h1>
+            <p class="page-subtitle">Mise à jour en direct : <span data-current-date></span></p>
+          </div>
+          <div class="page-header__meta">
+            <div class="search-box" role="search">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M21 21l-4.35-4.35M19 11.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+              <input type="search" placeholder="Rechercher un talent, un dossier..." />
+            </div>
+            <div class="user-summary">
+              <span class="user-avatar" data-user-avatar aria-hidden="true"></span>
+              <div>
+                <strong data-user-name></strong>
+                <span data-user-organisation></span>
+              </div>
+            </div>
+            <button class="btn btn-outline" data-action="sign-out">Déconnexion</button>
+          </div>
+        </header>
+
+        <div class="command-bar" role="toolbar" aria-label="Actions rapides">
+          <button type="button">Créer une campagne d’évaluation</button>
+          <button type="button">Lancer un onboarding</button>
+          <button type="button">Synchroniser vers Power BI</button>
+          <button type="button">Partager aux managers</button>
+        </div>
+
+        <section class="dashboard-block">
+          <div class="block-header">
+            <h2>Indicateurs de performance RH</h2>
+            <div class="block-actions" id="privateKpiControls">
+              <button data-value="week" data-selected="true">Semaine</button>
+              <button data-value="month">Mois</button>
+              <button data-value="quarter">Trimestre</button>
+            </div>
+          </div>
+          <div class="metrics-grid" id="privateKpiGrid"></div>
+        </section>
+
+        <section class="split-grid">
+          <article class="surface-card">
+            <header>
+              <h3>Pipeline recrutement</h3>
+              <span>IA matching & SLA</span>
+            </header>
+            <div class="pipeline-summary">
+              <span>Offres actives : 28</span>
+              <span>Délai moyen : 18 jours</span>
+              <span class="pipeline-stage">IA scoring activé</span>
+            </div>
+            <div class="kanban-board" id="pipelineBoard"></div>
+          </article>
+
+          <article class="surface-card">
+            <header>
+              <h3>Engagement & QVT</h3>
+              <span>Sites industriels & retail</span>
+            </header>
+            <div class="energy-map" id="engagementMap"></div>
+          </article>
+        </section>
+
+        <section class="split-grid">
+          <article class="surface-card">
+            <header>
+              <h3>Programmes en cours</h3>
+              <span>Transformation RH</span>
+            </header>
+            <div class="performance-cards" id="programCards"></div>
+          </article>
+
+          <article class="surface-card">
+            <header>
+              <h3>Suivi paie & conformité</h3>
+              <span>Contrôles temps réel</span>
+            </header>
+            <table class="compact-table" id="payrollTable">
+              <thead>
+                <tr>
+                  <th>Pays / Site</th>
+                  <th>État paie</th>
+                  <th>Contrôle</th>
+                  <th>Anomalies</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </article>
+        </section>
+
+        <section class="surface-card">
+          <header>
+            <h3>Agenda managers & actions prioritaires</h3>
+            <span>Synchronisé Teams</span>
+          </header>
+          <table class="table-lite" id="actionTable">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Owner</th>
+                <th>Due</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/base.js" defer></script>
+    <script src="../assets/js/dashboard-shared.js" defer></script>
+    <script src="../assets/js/dashboard-private.js" defer></script>
+  </body>
+</html>

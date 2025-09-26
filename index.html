@@ -10,9 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/home.css" />
   </head>
-  <body>
+  <body data-root="./">
     <header class="top-bar">
       <div class="brand">
         <span class="brand-icon" aria-hidden="true">◆</span>
@@ -29,6 +30,7 @@
         <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
           <span class="toggle-icon" aria-hidden="true"></span>
         </button>
+        <a class="btn btn-ghost" href="./pages/login.html">Connexion</a>
         <a class="btn btn-outline" href="#demo">Demander une démo</a>
       </div>
     </header>
@@ -53,6 +55,7 @@
             <button class="btn btn-ghost" data-scope="private">
               Portail secteur privé
             </button>
+            <a class="btn btn-outline" href="./pages/login.html">Se connecter</a>
           </div>
           <ul class="hero-metrics" id="heroMetrics" aria-live="polite"></ul>
         </div>
@@ -250,6 +253,7 @@
       </div>
     </footer>
 
-    <script src="./assets/js/app.js" defer></script>
+    <script src="./assets/js/base.js" defer></script>
+    <script src="./assets/js/home.js" defer></script>
   </body>
 </html>
