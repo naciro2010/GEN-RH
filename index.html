@@ -3,97 +3,259 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlas HR Suite – Gestion RH Maroc</title>
+    <title>Atlas HR Suite – Suite SIRH complète</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@500;700&display=swap" rel="stylesheet" />
     <script type="module" src="https://unpkg.com/@fluentui/web-components@2.5.6/dist/web-components.min.js"></script>
     <link rel="stylesheet" href="assets/css/landing.css" />
   </head>
   <body>
-    <header class="hero">
-      <div class="hero__bar">
-        <div class="brand">
+    <header class="site-header" id="top">
+      <div class="container">
+        <a href="#top" class="logo">
           <img src="assets/icon.svg" alt="Atlas HR Suite" />
           <span>Atlas HR Suite</span>
-        </div>
-        <nav class="hero__nav">
+        </a>
+        <nav class="site-nav">
+          <a href="#vision">Vision</a>
           <a href="#modules">Modules</a>
-          <a href="#conformite">Conformité</a>
-          <a href="#tarifs">Tarifs</a>
-          <a href="#contact">Contact</a>
+          <a href="#experience">Expérience</a>
+          <a href="#references">Références</a>
           <fluent-anchor appearance="accent" href="login.html">Se connecter</fluent-anchor>
         </nav>
-      </div>
-      <div class="hero__content">
-        <h1>Suite RH moderne, pensée pour le Maroc</h1>
-        <p>Du recrutement à la paie et à la formation – conformité CNSS, AMO, CIMR et SIMPL‑IR intégrée. Une expérience Microsoft 365 élégante et productive.</p>
-        <div class="hero__cta">
-          <fluent-anchor appearance="accent" href="login.html">Accéder au tableau de bord</fluent-anchor>
-          <fluent-anchor appearance="stealth" href="#modules">Découvrir les modules</fluent-anchor>
-        </div>
+        <button class="nav-toggle" aria-label="Ouvrir le menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </header>
 
     <main>
-      <section id="modules" class="section">
-        <h2>Modules couverts</h2>
-        <div class="cards">
-          <article class="card"><h3>Recrutement</h3><p>Kanban pipeline, fiches candidat FR/AR, consentement loi 09‑08.</p></article>
-          <article class="card"><h3>Onboarding</h3><p>Checklists IT/RH/Manager, génération contrat & attestation.</p></article>
-          <article class="card"><h3>Salariés</h3><p>Identité, CNIE, CNSS, RIB, contrats, ayants droit, CIMR.</p></article>
-          <article class="card"><h3>Temps & Pointage</h3><p>Imports XLSX/CSV, heures sup paramétrables, variables paie.</p></article>
-          <article class="card"><h3>Congés</h3><p>Demandes, soldes, fériés Maroc public/privé, validation 1‑2 niveaux.</p></article>
-          <article class="card"><h3>Paie Maroc</h3><p>CNSS/AMO/TFP, barème IR 2025, bulletins, exports CNSS & SIMPL‑IR.</p></article>
-          <article class="card"><h3>Formation</h3><p>Plan, sessions, présences, évaluations, suivi budget TFP.</p></article>
-          <article class="card"><h3>Documents</h3><p>Modèles DOCX, exports Excel, hooks Office / Graph.</p></article>
+      <section class="hero" id="vision">
+        <div class="container hero__grid">
+          <div class="hero__content">
+            <span class="pill">SIRH marocain nouvelle génération</span>
+            <h1>Le pilotage RH qui rivalise avec les leaders SIRH nationaux.</h1>
+            <p>
+              Atlas HR Suite couvre l’intégralité du cycle de vie collaborateur&nbsp;: recrutement, onboarding,
+              paie Maroc, compétences et engagement. Une expérience moderne, inspirée de la référence AGIRH,
+              avec nos innovations analytics et Microsoft 365.
+            </p>
+            <div class="hero__actions">
+              <fluent-anchor appearance="accent" href="login.html">Découvrir la démo</fluent-anchor>
+              <fluent-anchor appearance="stealth" href="#modules">Voir les modules</fluent-anchor>
+            </div>
+            <ul class="hero__badges">
+              <li><strong>+30</strong> processus prêts à l’emploi</li>
+              <li><strong>CNSS / SIMPL‑IR</strong> conformes 2025</li>
+              <li><strong>FR / AR</strong> avec mode RTL</li>
+            </ul>
+          </div>
+          <div class="hero__visual" aria-hidden="true">
+            <div class="device-frame">
+              <div class="device-header">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div class="device-body">
+                <div class="device-chip">
+                  <span>Paie en direct</span>
+                  <strong>Net moyen&nbsp;: 12 540&nbsp;MAD</strong>
+                  <small>Mise à jour à 09:42</small>
+                </div>
+                <div class="device-stats">
+                  <div>
+                    <span>Recrutement</span>
+                    <strong>18</strong>
+                    <small>candidats actifs</small>
+                  </div>
+                  <div>
+                    <span>Formations</span>
+                    <strong>7</strong>
+                    <small>sessions à venir</small>
+                  </div>
+                  <div>
+                    <span>Absences</span>
+                    <strong>3</strong>
+                    <small>aujourd’hui</small>
+                  </div>
+                </div>
+                <div class="device-footer">
+                  <span class="tag">Mode Excel</span>
+                  <span class="tag">Power BI Ready</span>
+                  <span class="tag">Self‑Service</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero__glow"></div>
+          </div>
         </div>
       </section>
 
-      <section id="conformite" class="section alt">
-        <h2>Conformité & Sécurité</h2>
-        <ul class="list">
-          <li>Protection des données personnelles – Loi 09‑08 (CNDP)</li>
-          <li>Processus CNSS / Damancom & AMO – prêts pour l’EDI</li>
-          <li>Exports SIMPL‑IR et génération XML EDI</li>
-          <li>Hébergement Maroc ou cloud public – chiffrement au repos</li>
-        </ul>
-      </section>
-
-      <section id="tarifs" class="section">
-        <h2>Tarification simple</h2>
-        <div class="pricing">
-          <div class="price-card">
-            <h3>Essentiel</h3>
-            <p class="price">Gratuit</p>
-            <ul>
-              <li>Recrutement & salariés</li>
-              <li>Imports/Exports XLSX</li>
-              <li>Templates DOCX</li>
-            </ul>
-          </div>
-          <div class="price-card highlight">
-            <h3>Entreprise</h3>
-            <p class="price">Sur devis</p>
-            <ul>
-              <li>Paie complète Maroc</li>
-              <li>Connecteurs Office Graph</li>
-              <li>Support prioritaire</li>
-            </ul>
+      <section class="social-proof" id="references">
+        <div class="container">
+          <p>Adoptée par des entreprises marocaines et africaines ambitieuses</p>
+          <div class="proof-logos">
+            <span>FinanceTech</span>
+            <span>Dar El IT</span>
+            <span>Atlas Public</span>
+            <span>Medina Services</span>
+            <span>North Africa Steel</span>
           </div>
         </div>
       </section>
 
-      <section id="contact" class="section alt">
-        <h2>Contact</h2>
-        <p>Demandez une démo à l’équipe Atlas : <a href="mailto:support@atlas-suite.ma">support@atlas-suite.ma</a></p>
+      <section class="modules" id="modules">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="pill pill--ghost">Plateforme modulaire</span>
+              <h2>Tout le SIRH en un hub, au niveau des leaders du marché.</h2>
+              <p>
+                Avec Atlas HR Suite vous retrouvez les parcours et bonnes pratiques AGIRH&nbsp;: Core RH, paie,
+                talents, self-service et pilotage stratégique… avec une ergonomie modernisée.
+              </p>
+            </div>
+            <fluent-anchor appearance="accent" href="app.html">Entrer dans l’application</fluent-anchor>
+          </div>
+          <div class="card-grid">
+            <article class="card">
+              <span class="card-icon" aria-hidden="true">👥</span>
+              <h3>Core RH &amp; Social</h3>
+              <p>Administration du personnel, dossier salarié 360°, workflow CNSS, contrats bilingues.</p>
+              <ul>
+                <li>Checklists onboarding multi-équipes</li>
+                <li>Gestion des documents RH chiffrés</li>
+                <li>Historique légal 5 ans</li>
+              </ul>
+            </article>
+            <article class="card">
+              <span class="card-icon" aria-hidden="true">💼</span>
+              <h3>Paie Maroc</h3>
+              <p>Calculs CNSS/AMO/TFP, IR 2025, variables mensuelles, exports Damancom &amp; SIMPL‑IR.</p>
+              <ul>
+                <li>Simulation masse salariale temps réel</li>
+                <li>Bulletins Word / Excel générés en 1 clic</li>
+                <li>Campagnes de régularisation</li>
+              </ul>
+            </article>
+            <article class="card">
+              <span class="card-icon" aria-hidden="true">⭐</span>
+              <h3>Talents &amp; Compétences</h3>
+              <p>Recrutement en kanban, évaluations, plans de succession et entretiens annuels.</p>
+              <ul>
+                <li>Job boards multi-sources</li>
+                <li>Profils de compétences et matrices 9-box</li>
+                <li>Campagnes d’entretiens multilingues</li>
+              </ul>
+            </article>
+            <article class="card">
+              <span class="card-icon" aria-hidden="true">🤝</span>
+              <h3>Self-service collaborateur</h3>
+              <p>Portail salarié, demandes de congés, déclarations de pointage, workflow managers.</p>
+              <ul>
+                <li>Accès mobile responsive</li>
+                <li>Notifications Fluent UI</li>
+                <li>Signature électronique intégrée</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics">
+        <div class="container metrics__grid">
+          <div>
+            <h3>Des gains mesurables.</h3>
+            <p>
+              Les organisations qui migrent depuis des solutions historiques réduisent l’administratif de 38&nbsp;%
+              et accélèrent leurs campagnes paie et talent management.
+            </p>
+          </div>
+          <div class="metric-card">
+            <strong>‑40&nbsp;%</strong>
+            <span>Temps de préparation paie</span>
+          </div>
+          <div class="metric-card">
+            <strong>95&nbsp;%</strong>
+            <span>Adoption du portail collaborateurs</span>
+          </div>
+          <div class="metric-card">
+            <strong>&lt;30&nbsp;j</strong>
+            <span>Projet moyen de mise en service</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="experience" id="experience">
+        <div class="container experience__grid">
+          <div class="experience__visual" aria-hidden="true">
+            <div class="panel panel--one">
+              <span class="panel-title">Vue Manager</span>
+              <p>Validation multi-niveaux, suivi budget, to-do list quotidienne.</p>
+            </div>
+            <div class="panel panel--two">
+              <span class="panel-title">Portail Collaborateur</span>
+              <p>Demandes congés, bulletins, attestations disponibles 24/7.</p>
+            </div>
+            <div class="panel panel--three">
+              <span class="panel-title">Analytics</span>
+              <p>Widgets Power BI, turnover, masse salariale, diversité.</p>
+            </div>
+          </div>
+          <div class="experience__content">
+            <span class="pill pill--ghost">Expérience utilisateur</span>
+            <h2>Une interface riche et rassurante, pensée pour les usages quotidiens.</h2>
+            <ul>
+              <li>Ribbon type Office pour les actions clés, navigation latérale structurée.</li>
+              <li>Mode Excel vert pour les experts paie, mode standard pour tout le monde.</li>
+              <li>Accessibilité FR / AR, prise en charge RTL et thèmes clair/sombre.</li>
+            </ul>
+            <fluent-anchor appearance="accent" href="app.html#/"><span>Tester le tableau de bord</span></fluent-anchor>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container">
+          <div class="cta__content">
+            <h2>Prêt à proposer mieux que votre SIRH actuel&nbsp;?</h2>
+            <p>
+              Nous paramétrons Atlas HR Suite en moins d’un mois avec reprise des données, paramétrage légal
+              Maroc, intégrations Microsoft 365 et formation des équipes.
+            </p>
+          </div>
+          <div class="cta__actions">
+            <fluent-anchor appearance="accent" href="mailto:support@atlas-suite.ma">Planifier une démo</fluent-anchor>
+            <fluent-anchor appearance="stealth" href="login.html">Ouvrir la sandbox</fluent-anchor>
+          </div>
+        </div>
       </section>
     </main>
 
-    <footer class="footer">
-      <span>© ${new Date().getFullYear()} Atlas HR Suite — Tous droits réservés.</span>
-      <a href="login.html">Entrer dans l’application</a>
+    <footer class="site-footer">
+      <div class="container">
+        <div>
+          <strong>Atlas HR Suite</strong>
+          <p>Suite RH complète, inspirée des meilleures pratiques SIRH marocaines.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#modules">Modules</a>
+          <a href="#experience">Expérience</a>
+          <a href="login.html">Accès application</a>
+        </div>
+        <span class="footer-copy">© <span id="year"></span> Atlas HR Suite — Tous droits réservés.</span>
+      </div>
     </footer>
+
+    <script>
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.querySelector('.site-nav');
+      toggle?.addEventListener('click', () => {
+        nav?.classList.toggle('open');
+        toggle.classList.toggle('open');
+      });
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>
