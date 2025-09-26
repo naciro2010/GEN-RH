@@ -1,0 +1,19 @@
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { useMemo } from 'react';
+import { useAtlasStore } from '../store/useAtlasStore';
+import { simulatePayroll } from '../services/payroll';
+import { formatMAD, formatNumber } from '../utils/format';
+const DashboardPage = () => {
+    const data = useAtlasStore((state) => state.data);
+    const payrollSim = useMemo(() => {
+        return simulatePayroll(data.employees, data.payrollVariables.variables, data.settings.payrollParams);
+    }, [data]);
+    const hiresInProgress = useMemo(() => data.offers.reduce((acc, offer) => acc + (offer.pipeline.Offre?.length || 0) + (offer.pipeline.Embauche?.length || 0), 0), [data.offers]);
+    const today = new Date().toISOString().slice(0, 10);
+    const absToday = data.attendance.filter((item) => item.date === today && item.status?.toLowerCase() === 'absent').length;
+    const upcomingTraining = data.formations.reduce((count, formation) => {
+        return (count + formation.sessions.filter((session) => new Date(session.date) >= new Date()).length);
+    }, 0);
+    return (_jsxs(_Fragment, { children: [_jsxs("section", { className: "grid kpi", children: [_jsxs("div", { className: "kpi-card", children: [_jsx("span", { className: "badge", children: "Embauches en cours" }), _jsx("strong", { children: formatNumber(hiresInProgress) })] }), _jsxs("div", { className: "kpi-card", children: [_jsx("span", { className: "badge", children: "Absences du jour" }), _jsx("strong", { children: formatNumber(absToday) })] }), _jsxs("div", { className: "kpi-card", children: [_jsx("span", { className: "badge", children: "Masse salariale du mois" }), _jsx("strong", { children: formatMAD(payrollSim.masseSalariale) })] }), _jsxs("div", { className: "kpi-card", children: [_jsx("span", { className: "badge", children: "Sessions de formation \u00E0 venir" }), _jsx("strong", { children: formatNumber(upcomingTraining) })] })] }), _jsxs("section", { className: "data-card", children: [_jsxs("div", { className: "section-header", children: [_jsx("h2", { children: "Tableau de bord" }), _jsxs("div", { className: "quick-links", children: [_jsx("button", { type: "button", className: "btn-pill", onClick: () => window.open('#/app/recrutement', '_self'), children: "Recruter" }), _jsx("button", { type: "button", className: "btn-pill", onClick: () => window.open('#/app/paie', '_self'), children: "Lancer paie" }), _jsx("button", { type: "button", className: "btn-pill", onClick: () => window.open('https://www.cnss.ma/fr/tele-services', '_blank'), children: "D\u00E9clarer CNSS" }), _jsx("button", { type: "button", className: "btn-pill", onClick: () => window.open('https://simpl-ir.tax.gov.ma/', '_blank'), children: "SIMPL-IR" })] })] }), _jsxs("div", { className: "grid", children: [_jsxs("div", { children: [_jsx("h3", { children: "Pipeline recrutement" }), _jsx("ul", { className: "timeline", children: data.offers.map((offer) => (_jsxs("li", { children: [_jsx("strong", { children: offer.titre }), _jsxs("small", { children: [formatNumber(offer.pipeline.Entretien?.length || 0), " entretiens,", ' ', formatNumber(offer.pipeline.Test?.length || 0), " tests"] })] }, offer.id))) })] }), _jsxs("div", { children: [_jsx("h3", { children: "Alertes paie & conformit\u00E9" }), _jsxs("ul", { className: "timeline", children: [_jsxs("li", { children: [_jsx("strong", { children: "SIMPL-IR" }), _jsx("small", { children: "\u00C9ch\u00E9ance prochaine : 30/05" })] }), _jsxs("li", { children: [_jsx("strong", { children: "Damancom" }), _jsx("small", { children: "D\u00E9claration pr\u00E9visionnelle pr\u00EAte" })] }), _jsxs("li", { children: [_jsx("strong", { children: "Loi 09-08" }), _jsx("small", { children: "Audit acc\u00E8s data pr\u00E9vu S3" })] })] })] })] })] })] }));
+};
+export default DashboardPage;

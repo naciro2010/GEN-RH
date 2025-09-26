@@ -1,0 +1,27 @@
+.toast-corner {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: grid;
+  gap: 0.6rem;
+  z-index: 100;
+}
+
+.toast {
+  background: linear-gradient(135deg, rgba(18, 83, 176, 0.95), rgba(11, 31, 63, 0.95));
+  color: #fff;
+  padding: 0.95rem 1.3rem;
+  border-radius: 16px;
+  min-width: 240px;
+  box-shadow: 0 22px 45px rgba(5, 18, 35, 0.35);
+}
+
+.toast--warn {
+  background: linear-gradient(135deg, rgba(252, 121, 66, 0.95), rgba(255, 179, 0, 0.92));
+  color: #1f2937;
+}
+
+.toast--success {
+  background: linear-gradient(135deg, rgba(64, 183, 143, 0.95), rgba(74, 222, 128, 0.9));
+  color: #052e16;
+}

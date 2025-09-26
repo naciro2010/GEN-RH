@@ -1,0 +1,34 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { FluentProvider } from '@fluentui/react-components';
+import clsx from 'clsx';
+import { useAtlasStore } from './store/useAtlasStore';
+import { atlasDarkTheme, atlasLightTheme, excelTheme } from './theme/themes';
+import { ToastProvider } from './components/ui/ToastProvider';
+import LandingPage from './pages/LandingPage';
+import AppLayout from './layouts/AppLayout';
+import DashboardPage from './pages/DashboardPage';
+import RecruitmentPage from './pages/RecruitmentPage';
+import OnboardingPage from './pages/OnboardingPage';
+import EmployeesPage from './pages/EmployeesPage';
+import PayrollPage from './pages/PayrollPage';
+import TimePage from './pages/TimePage';
+import LeavesPage from './pages/LeavesPage';
+import TrainingPage from './pages/TrainingPage';
+import DocumentsPage from './pages/DocumentsPage';
+import AdminPage from './pages/AdminPage';
+const App = () => {
+    const { data, ui } = useAtlasStore((state) => ({ data: state.data, ui: state.ui }));
+    const themeName = data.settings.theme ?? 'light';
+    const isDark = themeName === 'dark';
+    const baseTheme = isDark ? atlasDarkTheme : atlasLightTheme;
+    const theme = ui.excelMode ? excelTheme : baseTheme;
+    useEffect(() => {
+        document.documentElement.lang = data.settings.locale ?? 'fr';
+        const rtl = data.settings.rtl ?? data.settings.locale === 'ar';
+        document.body.dir = rtl ? 'rtl' : 'ltr';
+    }, [data.settings.locale, data.settings.rtl]);
+    return (_jsx(FluentProvider, { theme: theme, className: clsx({ excel: ui.excelMode }), children: _jsx(ToastProvider, { children: _jsxs(Routes, { children: [_jsx(Route, { path: "/", element: _jsx(LandingPage, {}) }), _jsxs(Route, { path: "/app", element: _jsx(AppLayout, {}), children: [_jsx(Route, { index: true, element: _jsx(DashboardPage, {}) }), _jsx(Route, { path: "dashboard", element: _jsx(DashboardPage, {}) }), _jsx(Route, { path: "recrutement", element: _jsx(RecruitmentPage, {}) }), _jsx(Route, { path: "onboarding", element: _jsx(OnboardingPage, {}) }), _jsx(Route, { path: "salaries", element: _jsx(EmployeesPage, {}) }), _jsx(Route, { path: "temps", element: _jsx(TimePage, {}) }), _jsx(Route, { path: "conges", element: _jsx(LeavesPage, {}) }), _jsx(Route, { path: "paie", element: _jsx(PayrollPage, {}) }), _jsx(Route, { path: "formation", element: _jsx(TrainingPage, {}) }), _jsx(Route, { path: "documents", element: _jsx(DocumentsPage, {}) }), _jsx(Route, { path: "admin", element: _jsx(AdminPage, {}) })] })] }) }) }));
+};
+export default App;

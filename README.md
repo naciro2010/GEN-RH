@@ -1,53 +1,53 @@
-# Atlas HR Suite – Prototype Fluent
+# Atlas HR Suite – Prototype Fluent (React + Vite)
 
-Prototype front complet (HTML5 + CSS + JavaScript vanilla) illustrant une suite RH marocaine du recrutement à la paie, conçu comme application mono-page avec Fluent UI Web Components.
+Application démonstrateur d’une suite SIRH marocaine (recrutement → paie) construite désormais avec React, Vite et Fluent UI v9.
 
-## Fonctionnalités clefs
-- Routage client (`#/path`) avec navigation latérale façon Microsoft 365.
-- Bilingue FR/AR (RTL), thème clair/sombre et composants Fluent (boutons, champs, data-grid simplifiée).
-- Jeu de données simulé stocké dans `localStorage` (10 salariés, pipeline recrutement, onboarding, temps, congés, paie, formation, documents).
-- Moteur de paie marocain : CNSS/AMO/TFP, barème IR 2025, prime d’ancienneté, heures supplémentaires paramétrables, simulation et exports.
-- Exports DOCX via `docx` et XLSX via `SheetJS`, placeholders pour intégration Microsoft Graph (Word/Excel Online).
-- Import/Export JSON du jeu de données, import XLSX du pointage, génération de lettres d’offre, contrats, bulletins.
+## Points clés
+- SPA HashRouter (`#/app/...`) avec navigation latérale, ruban type Office, bottom tabs.
+- Thèmes clair/sombre + mode Excel (palette verte) partagés via Fluent Provider.
+- Localisation FR / AR (RTL) et bascule instantanée.
+- Jeu de données de démonstration stocké côté client (Zustand) : offres, candidats, salariés, paie, temps, congés, formations, documents.
+- Moteur paie Maroc (CNSS/AMO/TFP, IR 2025, prime ancienneté, heures sup) + exports JSON CNSS / SIMPL-IR.
+- Landing marketing alignée sur les codes SIRH marocains (AGIRH-like), intégrée en React (`/`).
 
 ## Structure
 ```
-index.html                  # App shell Fluent + inclusion CDN (Fluent, docx, SheetJS)
-assets/
-├── css/
-│   └── app.css             # Styles Fluent adaptés, responsive, RTL ready
-└── js/
-    ├── app.js              # Entrée SPA, router, thèmes, toasts, import/export
-    ├── data/
-    │   ├── defaults.js     # Jeu de données seed (salariés, offres, params paie…)
-    │   └── store.js        # Gestion localStorage, pub/sub
-    ├── services/
-    │   ├── exports.js      # Génération DOCX/XLSX, placeholders Office Graph
-    │   ├── payroll.js      # Fonctions de calcul paie (CNSS, IR, net…)
-    │   └── utils.js        # Format MAD, masquage CNIE, toasts, helpers
-    ├── i18n.js             # Dictionnaire FR/AR + bascule RTL
-    └── pages/              # Modules de rendu pour chaque route (dashboard → admin)
+src/
+├── App.tsx                # Routing + Fluent Provider
+├── data/defaultData.ts    # Jeu de données seed (typed)
+├── layouts/AppLayout.tsx  # Header / ribbon / nav / footer tabs
+├── pages/                 # Dashboard, Recrutement, Salariés, Paie, etc.
+├── services/payroll.ts    # Fonctions de calcul paie
+├── store/useAtlasStore.ts # Zustand store (data + UI state)
+├── styles/                # Global, app shell, landing, toasts
+└── utils/                 # Format MAD, download helper, clone helper
 ```
 
-## Routes disponibles
-- `#/` Tableau de bord (KPI, liens rapides CNSS/SIMPL-IR)
-- `#/recrutement` Kanban pipeline + fiche candidat FR/AR, exports Excel/DOCX
-- `#/onboarding` Checklists IT/RH/Manager, génération contrat/attestation
-- `#/salaries` Grille salariés, fiche éditable, documents/journal
-- `#/temps` Planning & import XLSX, règles heures sup paramétrables
-- `#/conges` Gestion des demandes et calendrier fériés public/privé
-- `#/paie` Paramètres Maroc, variables mensuelles, simulation, exports CNSS & SIMPL
-- `#/formation` Plan de formation & rappel TFP 1.6%
-- `#/documents` Gestion modèles DOCX, exports Excel, placeholder Graph
-- `#/admin` Rôles, locales, paramètres légaux, reset données
+## Scripts
+```bash
+npm install       # installe les dépendances
+npm run dev       # démarre Vite en mode développement (http://localhost:5173)
+npm run build     # build production (dist/)
+npm run preview   # sert le build pour vérification locale
+```
 
-## Utilisation
-1. Ouvrir `index.html` dans un navigateur moderne (serveur non requis).
-2. Adapter les données/script via `localStorage` (boutons Importer/Exporter dans le menu).
-3. Pour remettre les données par défaut : Admin → "Réinitialiser jeu de données".
+## Déploiement
+Le workflow GitHub Actions (`.github/workflows/deploy-pages.yml`) build automatiquement le site (npm ci → npm run build) puis publie `dist/` sur GitHub Pages. Aucun service externe payant requis.
 
-## Intégrations Office (placeholders)
-- Boutons "Ouvrir dans Word/Excel" redirigent vers Office sur le web.
-- Fonction `openInExcelGraph` contient les endpoints Graph à implémenter pour uploader un fichier dans OneDrive et alimenter un workbook.
+## Routes principales
+- `/` : page d’atterrissage marketing
+- `#/app` : tableau de bord
+- `#/app/recrutement` : pipeline kanban + ajout candidat
+- `#/app/salaries` : fiche salarié éditable
+- `#/app/temps` : pointage + import JSON + règles heures sup
+- `#/app/conges` : demandes congés & jours fériés public/privé
+- `#/app/paie` : paramètres CNSS/IR, variables mensuelles, simulation
+- `#/app/formation`, `#/app/documents`, `#/app/admin`
 
-Ce prototype est prêt à être branché sur un back-end (APIs métiers, Microsoft Graph, etc.) en remplaçant progressivement les services `store.js` et `exports.js`.
+## À suivre (itérations futures)
+- Brancher export DOCX/XLSX (actuellement JSON placeholder)
+- Implémenter backend persistant & authentification
+- Intégrations CNSS/SIMPL-IR/Damancom temps réel
+- Portail self-service collaborateurs + workflows multi-niveaux
+
+Ce socle sert de base moderne pour pousser Atlas HR Suite vers une expérience comparable aux SIRH leaders marocains tout en restant 100 % déployable via GitHub Pages.

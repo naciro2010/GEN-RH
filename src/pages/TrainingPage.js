@@ -1,0 +1,10 @@
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { useAtlasStore } from '../store/useAtlasStore';
+import { formatMAD, formatNumber } from '../utils/format';
+const TrainingPage = () => {
+    const data = useAtlasStore((state) => state.data);
+    const totalBudget = data.formations.reduce((sum, action) => sum + (action.budget || 0), 0);
+    const totalParticipants = data.formations.reduce((sum, action) => sum + action.sessions.reduce((acc, session) => acc + (session.participants || 0), 0), 0);
+    return (_jsxs(_Fragment, { children: [_jsxs("section", { className: "data-card", children: [_jsxs("div", { className: "section-header", children: [_jsx("h2", { children: "Plan de formation" }), _jsxs("span", { className: "badge", children: ["Budget total ", formatMAD(totalBudget), " \u2013 Participants ", formatNumber(totalParticipants)] })] }), _jsx("div", { className: "grid", style: { gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }, children: data.formations.map((action) => (_jsxs("div", { className: "data-card", style: { padding: '1.4rem' }, children: [_jsxs("div", { className: "section-header", children: [_jsx("h3", { children: action.intitule }), _jsx("span", { className: "badge", children: formatMAD(action.budget) })] }), _jsx("ul", { className: "timeline", children: action.sessions.map((session) => (_jsxs("li", { children: [_jsx("strong", { children: session.date }), _jsxs("small", { children: [session.lieu, " \u2013 ", session.participants, " inscrits / ", session.presence, " pr\u00E9sents \u2013 \u00C9valuation ", session.evaluation] })] }, session.date))) })] }, action.id))) })] }), _jsxs("section", { className: "data-card", children: [_jsx("h3", { children: "Rappel TFP" }), _jsxs("p", { children: ["La Taxe de Formation Professionnelle (TFP) repr\u00E9sente ", data.settings.payrollParams.cnss.tfp_pct_employeur || 1.6, "% de la masse salariale et constitue un co\u00FBt employeur affect\u00E9 aux actions de formation. Utilisez les donn\u00E9es ci-dessus pour piloter ce budget."] })] })] }));
+};
+export default TrainingPage;
