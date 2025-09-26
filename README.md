@@ -1,49 +1,53 @@
-# Atlas HR Suite – Front statique
+# Atlas HR Suite – Prototype Fluent
 
-Ensemble de pages HTML/CSS/JS inspirées de l’univers Microsoft pour présenter Atlas HR Suite, proposer une authentification de démonstration et deux portails (secteur public et secteur privé) prêts à être branchés sur un futur back-end.
+Prototype front complet (HTML5 + CSS + JavaScript vanilla) illustrant une suite RH marocaine du recrutement à la paie, conçu comme application mono-page avec Fluent UI Web Components.
 
-## Structure du projet
+## Fonctionnalités clefs
+- Routage client (`#/path`) avec navigation latérale façon Microsoft 365.
+- Bilingue FR/AR (RTL), thème clair/sombre et composants Fluent (boutons, champs, data-grid simplifiée).
+- Jeu de données simulé stocké dans `localStorage` (10 salariés, pipeline recrutement, onboarding, temps, congés, paie, formation, documents).
+- Moteur de paie marocain : CNSS/AMO/TFP, barème IR 2025, prime d’ancienneté, heures supplémentaires paramétrables, simulation et exports.
+- Exports DOCX via `docx` et XLSX via `SheetJS`, placeholders pour intégration Microsoft Graph (Word/Excel Online).
+- Import/Export JSON du jeu de données, import XLSX du pointage, génération de lettres d’offre, contrats, bulletins.
 
+## Structure
 ```
-├── index.html                 # Landing page marketing (secteurs public/privé)
-├── pages/
-│   ├── login.html             # Portail de connexion (démonstration)
-│   ├── dashboard-public.html  # Dashboard secteur public
-│   └── dashboard-private.html # Dashboard secteur privé
-├── assets/
-│   ├── css/
-│   │   ├── base.css           # Fondations UI & tokens
-│   │   ├── home.css           # Styles landing page
-│   │   ├── login.css          # Styles écran de connexion
-│   │   ├── dashboard-shared.css   # Layout commun dashboards
-│   │   ├── dashboard-public.css   # Couche secteur public
-│   │   └── dashboard-private.css # Couche secteur privé
-│   └── js/
-│       ├── base.js                # Thème, auth simulée, helpers globaux
-│       ├── home.js                # Contenu dynamique landing
-│       ├── login.js               # Logique connexion + redirections
-│       ├── dashboard-shared.js    # Helpers dashboards (nav, formatage)
-│       ├── dashboard-public.js    # Données & rendu secteur public
-│       └── dashboard-private.js   # Données & rendu secteur privé
-└── LICENSE
+index.html                  # App shell Fluent + inclusion CDN (Fluent, docx, SheetJS)
+assets/
+├── css/
+│   └── app.css             # Styles Fluent adaptés, responsive, RTL ready
+└── js/
+    ├── app.js              # Entrée SPA, router, thèmes, toasts, import/export
+    ├── data/
+    │   ├── defaults.js     # Jeu de données seed (salariés, offres, params paie…)
+    │   └── store.js        # Gestion localStorage, pub/sub
+    ├── services/
+    │   ├── exports.js      # Génération DOCX/XLSX, placeholders Office Graph
+    │   ├── payroll.js      # Fonctions de calcul paie (CNSS, IR, net…)
+    │   └── utils.js        # Format MAD, masquage CNIE, toasts, helpers
+    ├── i18n.js             # Dictionnaire FR/AR + bascule RTL
+    └── pages/              # Modules de rendu pour chaque route (dashboard → admin)
 ```
 
-Chaque page HTML n’inclut que les feuilles de style et scripts nécessaires pour garder un découpage clair et réutilisable.
+## Routes disponibles
+- `#/` Tableau de bord (KPI, liens rapides CNSS/SIMPL-IR)
+- `#/recrutement` Kanban pipeline + fiche candidat FR/AR, exports Excel/DOCX
+- `#/onboarding` Checklists IT/RH/Manager, génération contrat/attestation
+- `#/salaries` Grille salariés, fiche éditable, documents/journal
+- `#/temps` Planning & import XLSX, règles heures sup paramétrables
+- `#/conges` Gestion des demandes et calendrier fériés public/privé
+- `#/paie` Paramètres Maroc, variables mensuelles, simulation, exports CNSS & SIMPL
+- `#/formation` Plan de formation & rappel TFP 1.6%
+- `#/documents` Gestion modèles DOCX, exports Excel, placeholder Graph
+- `#/admin` Rôles, locales, paramètres légaux, reset données
 
-## Comptes de démonstration
+## Utilisation
+1. Ouvrir `index.html` dans un navigateur moderne (serveur non requis).
+2. Adapter les données/script via `localStorage` (boutons Importer/Exporter dans le menu).
+3. Pour remettre les données par défaut : Admin → "Réinitialiser jeu de données".
 
-| Portail | Email | Mot de passe |
-|---------|-----------------------------|----------------|
-| Public  | `public.admin@atlas.local`  | `Public#2024`  |
-| Privé   | `private.director@atlas.local` | `Private#2024` |
+## Intégrations Office (placeholders)
+- Boutons "Ouvrir dans Word/Excel" redirigent vers Office sur le web.
+- Fonction `openInExcelGraph` contient les endpoints Graph à implémenter pour uploader un fichier dans OneDrive et alimenter un workbook.
 
-- Les comptes sont gérés côté front via `assets/js/base.js` (stockage local simulé).
-- Les dashboards vérifient le scope (public/privé) et redirigent vers la page de connexion si nécessaire.
-
-## Navigation & personnalisation
-
-- Le thème clair/sombre est disponible depuis le bouton circulaire dans l’en-tête.
-- Les accès rapides de la landing page remplissent automatiquement la portée souhaitée sur la page de connexion.
-- Les dashboards disposent d’une barre latérale modulable et de composants (KPI, timelines, kanban, heatmap, tableaux) prêts à connecter à une API.
-
-Pour brancher un back-end réel, remplacez la logique d’authentification dans `base.js` / `login.js` et injectez les données dans les scripts spécifiques aux dashboards.
+Ce prototype est prêt à être branché sur un back-end (APIs métiers, Microsoft Graph, etc.) en remplaçant progressivement les services `store.js` et `exports.js`.
