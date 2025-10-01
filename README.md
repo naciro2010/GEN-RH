@@ -51,3 +51,7 @@ Le workflow GitHub Actions (`.github/workflows/deploy-pages.yml`) build automati
 - Portail self-service collaborateurs + workflows multi-niveaux
 
 Ce socle sert de base moderne pour pousser Atlas HR Suite vers une expérience comparable aux SIRH leaders marocains tout en restant 100 % déployable via GitHub Pages.
+
+## Documentation
+- Backlog épics & stories: `docs/Backlog-Epics-Stories.md`
+- Modèle de story: `docs/Story-Template.md`
