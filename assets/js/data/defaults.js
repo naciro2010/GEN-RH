@@ -551,5 +551,819 @@ export const defaultData = {
       type: 'offre',
       variables: ['societe', 'nom', 'prenom', 'poste', 'salaire_mensuel', 'date_debut']
     }
+  ],
+  // MODULE 5 - Performance Management
+  objectives: [
+    {
+      id: 'OBJ-001',
+      employeeId: 'EMP-001',
+      titre: 'Digitaliser 100% des processus RH',
+      description: 'Implémenter et déployer Atlas HR Suite dans tous les départements',
+      dateDebut: '2024-01-01',
+      dateEcheance: '2024-12-31',
+      statut: 'En cours',
+      progression: 65,
+      poids: 40,
+      categorie: 'Stratégique',
+      kpis: ['Taux d\'adoption >90%', 'Satisfaction utilisateurs >4/5']
+    },
+    {
+      id: 'OBJ-002',
+      employeeId: 'EMP-002',
+      titre: 'Optimiser le cycle de paie',
+      description: 'Réduire le temps de traitement de la paie de 40%',
+      dateDebut: '2024-01-01',
+      dateEcheance: '2024-06-30',
+      statut: 'En cours',
+      progression: 80,
+      poids: 35,
+      categorie: 'Opérationnel',
+      kpis: ['Temps traitement <3 jours', '0 erreur CNSS']
+    },
+    {
+      id: 'OBJ-003',
+      employeeId: 'EMP-004',
+      titre: 'Migration Cloud Azure',
+      description: 'Migrer l\'infrastructure IT vers Azure avec HA',
+      dateDebut: '2024-02-01',
+      dateEcheance: '2024-08-31',
+      statut: 'En cours',
+      progression: 45,
+      poids: 50,
+      categorie: 'Projet',
+      kpis: ['Uptime >99.9%', 'Coûts réduits 25%']
+    }
+  ],
+  evaluations: [
+    {
+      id: 'EVAL-001',
+      employeeId: 'EMP-003',
+      type: '360',
+      periode: '2024',
+      statut: 'Complétée',
+      dateDebut: '2024-03-01',
+      dateFin: '2024-03-15',
+      evaluateurs: [
+        { id: 'EMP-001', role: 'Manager', note: 4.2, commentaire: 'Excellente performance en recrutement' },
+        { id: 'EMP-002', role: 'Pair', note: 4.0, commentaire: 'Bonne collaboration' },
+        { id: 'EMP-005', role: 'Pair', note: 4.5, commentaire: 'Très proactive' }
+      ],
+      noteGlobale: 4.23,
+      competences: {
+        'Communication': 4.5,
+        'Leadership': 3.8,
+        'Technique': 4.0,
+        'Organisation': 4.5
+      },
+      pointsForts: ['Sourcing candidats', 'Relation candidat', 'Rapidité traitement'],
+      axesAmelioration: ['Négociation salariale', 'Maîtrise outils analytics']
+    },
+    {
+      id: 'EVAL-002',
+      employeeId: 'EMP-008',
+      type: 'Annuelle',
+      periode: '2024',
+      statut: 'En cours',
+      dateDebut: '2024-04-01',
+      dateFin: '2024-04-20',
+      evaluateurs: [
+        { id: 'EMP-004', role: 'Manager', note: 3.5, commentaire: 'Performance satisfaisante, besoin formation' }
+      ],
+      noteGlobale: 3.5,
+      competences: {
+        'Technique': 3.8,
+        'Service client': 4.0,
+        'Autonomie': 3.0,
+        'Réactivité': 4.2
+      },
+      pointsForts: ['Rapidité résolution incidents', 'Relation utilisateurs'],
+      axesAmelioration: ['Certifications IT', 'Autonomie technique']
+    }
+  ],
+  talentPools: [
+    {
+      id: 'POOL-001',
+      nom: 'High Potentials',
+      description: 'Collaborateurs à haut potentiel identifiés pour succession management',
+      membres: ['EMP-003', 'EMP-005', 'EMP-007'],
+      criteres: ['Performance >4/5', 'Potentiel évolution', 'Mobilité géographique']
+    },
+    {
+      id: 'POOL-002',
+      nom: 'Experts Techniques',
+      description: 'Pool d\'experts techniques clés',
+      membres: ['EMP-004', 'EMP-005'],
+      criteres: ['Certifications', 'Expertise reconnue', '5+ ans expérience']
+    }
+  ],
+  successionPlans: [
+    {
+      id: 'SUCC-001',
+      posteClef: 'Directeur RH',
+      titulaire: 'EMP-001',
+      successeurs: [
+        { employeeId: 'EMP-003', readiness: 'Prêt dans 1-2 ans', score: 75 },
+        { employeeId: 'EMP-007', readiness: 'Prêt dans 2-3 ans', score: 65 }
+      ],
+      risque: 'Moyen',
+      actionsPreparation: [
+        'Formation stratégie RH',
+        'Participation CODIR',
+        'Gestion projet envergure'
+      ]
+    },
+    {
+      id: 'SUCC-002',
+      posteClef: 'Responsable IT',
+      titulaire: 'EMP-004',
+      successeurs: [
+        { employeeId: 'EMP-008', readiness: 'Prêt dans 3+ ans', score: 45 }
+      ],
+      risque: 'Élevé',
+      actionsPreparation: [
+        'Certifications Azure',
+        'Lead projets critiques',
+        'Formation management'
+      ]
+    }
+  ],
+  entretiensAnnuels: [
+    {
+      id: 'ENT-001',
+      employeeId: 'EMP-003',
+      managerId: 'EMP-001',
+      date: '2024-03-20',
+      statut: 'Réalisé',
+      duree: 90,
+      objectifsAnneeEcoulee: ['Recruter 15 profils', 'Optimiser process'],
+      bilanObjectifs: 'Objectifs atteints à 90%',
+      objectifsAnneeProchaine: ['Digitalisation recrutement', 'Employer branding'],
+      souhaitsEvolution: 'Responsable Recrutement',
+      formationsSouhaitees: ['Certif GPEC', 'Recrutement digital'],
+      commentaireManager: 'Excellente année, promotion envisagée',
+      commentaireEmploye: 'Année enrichissante, souhaite plus de responsabilités'
+    }
+  ],
+  // MODULE 6 - Paie Avancée
+  declarationsCNSS: [
+    {
+      id: 'CNSS-2024-05',
+      periode: '2024-05',
+      dateGeneration: '2024-06-05',
+      statut: 'Générée',
+      format: 'Damancom',
+      nbEmployes: 10,
+      masseSalarialeDeclaree: 180000,
+      cotisationsPatronales: 15606,
+      cotisationsSalariales: 8064,
+      fichier: 'CNSS_202405_ATLAS.txt'
+    },
+    {
+      id: 'CNSS-2024-04',
+      periode: '2024-04',
+      dateGeneration: '2024-05-06',
+      statut: 'Télétransmise',
+      dateTeletransmission: '2024-05-07',
+      format: 'Damancom',
+      nbEmployes: 10,
+      masseSalarialeDeclaree: 178500,
+      cotisationsPatronales: 15476,
+      cotisationsSalariales: 8009,
+      numeroRecepisse: 'REC-2024-04-123456'
+    }
+  ],
+  declarationsIR: [
+    {
+      id: 'IR-2024-05',
+      periode: '2024-05',
+      dateGeneration: '2024-06-10',
+      statut: 'Générée',
+      format: 'SIMPL-IR XML',
+      nbEmployes: 10,
+      montantIRTotal: 18450,
+      fichier: 'SIMPL_IR_202405_ATLAS.xml'
+    },
+    {
+      id: 'IR-2024-04',
+      periode: '2024-04',
+      dateGeneration: '2024-05-10',
+      statut: 'Télédéclarée',
+      dateTeletransmission: '2024-05-11',
+      format: 'SIMPL-IR XML',
+      nbEmployes: 10,
+      montantIRTotal: 18200,
+      numeroDeclaration: 'DGI-2024-04-987654'
+    }
+  ],
+  mutuelles: [
+    {
+      id: 'MUT-001',
+      nom: 'Saham Assurance',
+      type: 'Mutuelle santé',
+      numeroAdhesion: 'SAH-123456',
+      tauxCotisationPatron: 3.5,
+      tauxCotisationSalarie: 2.0,
+      plafondRemboursement: 50000,
+      garanties: ['Hospitalisation', 'Soins courants', 'Dentaire', 'Optique'],
+      employesConcernes: ['EMP-001', 'EMP-002', 'EMP-004', 'EMP-006', 'EMP-009']
+    },
+    {
+      id: 'MUT-002',
+      nom: 'Wafa Assurance',
+      type: 'Assurance groupe',
+      numeroAdhesion: 'WAF-789012',
+      tauxCotisationPatron: 2.5,
+      tauxCotisationSalarie: 1.5,
+      capitalDeces: 200000,
+      garanties: ['Décès', 'Invalidité permanente'],
+      employesConcernes: 'all'
+    }
+  ],
+  cimrAdhesions: [
+    {
+      id: 'CIMR-001',
+      employeeId: 'EMP-001',
+      dateAdhesion: '2015-04-01',
+      tauxCotisationPatron: 3.0,
+      tauxCotisationSalarie: 3.0,
+      plafondCotisation: 3000,
+      numeroAdherent: 'CIMR-2015-001234'
+    },
+    {
+      id: 'CIMR-002',
+      employeeId: 'EMP-004',
+      dateAdhesion: '2014-02-01',
+      tauxCotisationPatron: 3.0,
+      tauxCotisationSalarie: 3.0,
+      plafondCotisation: 3000,
+      numeroAdherent: 'CIMR-2014-005678'
+    },
+    {
+      id: 'CIMR-003',
+      employeeId: 'EMP-006',
+      dateAdhesion: '2005-05-02',
+      tauxCotisationPatron: 3.0,
+      tauxCotisationSalarie: 3.0,
+      plafondCotisation: 3000,
+      numeroAdherent: 'CIMR-2005-009012'
+    },
+    {
+      id: 'CIMR-004',
+      employeeId: 'EMP-009',
+      dateAdhesion: '2012-10-05',
+      tauxCotisationPatron: 3.0,
+      tauxCotisationSalarie: 3.0,
+      plafondCotisation: 3000,
+      numeroAdherent: 'CIMR-2012-003456'
+    }
+  ],
+  // MODULE 7 - Multisite
+  etablissements: [
+    {
+      id: 'ETB-001',
+      nom: 'Siège Social Casablanca',
+      type: 'Siège',
+      adresse: 'Twin Center, Tour A, Casablanca',
+      ville: 'Casablanca',
+      pays: 'Maroc',
+      ice: '001234567000001',
+      rc: 'CAS-123456',
+      cnss: '1234567',
+      patente: 'PAT-12345678',
+      nbEmployes: 45,
+      actif: true,
+      dateOuverture: '2010-01-15'
+    },
+    {
+      id: 'ETB-002',
+      nom: 'Agence Rabat',
+      type: 'Agence',
+      adresse: 'Hay Riad, Rabat',
+      ville: 'Rabat',
+      pays: 'Maroc',
+      ice: '001234567000002',
+      rc: 'RAB-789012',
+      cnss: '7890123',
+      patente: 'PAT-87654321',
+      nbEmployes: 12,
+      actif: true,
+      dateOuverture: '2015-06-01'
+    },
+    {
+      id: 'ETB-003',
+      nom: 'Usine Tanger',
+      type: 'Site industriel',
+      adresse: 'Zone Franche Tanger',
+      ville: 'Tanger',
+      pays: 'Maroc',
+      ice: '001234567000003',
+      rc: 'TAN-345678',
+      cnss: '3456789',
+      patente: 'PAT-34567890',
+      nbEmployes: 85,
+      actif: true,
+      dateOuverture: '2018-03-20'
+    }
+  ],
+  centresCouts: [
+    {
+      id: 'CC-001',
+      code: 'RH-001',
+      libelle: 'Ressources Humaines',
+      etablissement: 'ETB-001',
+      responsable: 'EMP-001',
+      budget: 500000,
+      type: 'Support'
+    },
+    {
+      id: 'CC-002',
+      code: 'FIN-001',
+      libelle: 'Finance & Comptabilité',
+      etablissement: 'ETB-001',
+      responsable: 'EMP-009',
+      budget: 400000,
+      type: 'Support'
+    },
+    {
+      id: 'CC-003',
+      code: 'IT-001',
+      libelle: 'Systèmes d\'Information',
+      etablissement: 'ETB-001',
+      responsable: 'EMP-004',
+      budget: 800000,
+      type: 'Support'
+    },
+    {
+      id: 'CC-004',
+      code: 'OPS-001',
+      libelle: 'Production Tanger',
+      etablissement: 'ETB-003',
+      responsable: 'EMP-006',
+      budget: 2500000,
+      type: 'Opérationnel'
+    }
+  ],
+  departements: [
+    {
+      id: 'DEPT-001',
+      nom: 'Ressources Humaines',
+      code: 'RH',
+      responsable: 'EMP-001',
+      etablissement: 'ETB-001',
+      centreCout: 'CC-001',
+      effectif: 3
+    },
+    {
+      id: 'DEPT-002',
+      nom: 'Finance',
+      code: 'FIN',
+      responsable: 'EMP-009',
+      etablissement: 'ETB-001',
+      centreCout: 'CC-002',
+      effectif: 2
+    },
+    {
+      id: 'DEPT-003',
+      nom: 'IT',
+      code: 'IT',
+      responsable: 'EMP-004',
+      etablissement: 'ETB-001',
+      centreCout: 'CC-003',
+      effectif: 2
+    },
+    {
+      id: 'DEPT-004',
+      nom: 'Operations',
+      code: 'OPS',
+      responsable: 'EMP-006',
+      etablissement: 'ETB-003',
+      centreCout: 'CC-004',
+      effectif: 85
+    }
+  ],
+  // MODULE 8 - Intégrations
+  apiKeys: [
+    {
+      id: 'API-001',
+      nom: 'Integration Sage Comptabilité',
+      service: 'Sage',
+      type: 'REST API',
+      statut: 'Active',
+      dateCreation: '2024-01-15',
+      derniereUtilisation: '2024-05-20',
+      permissions: ['read:accounting', 'write:journal']
+    },
+    {
+      id: 'API-002',
+      nom: 'Export Power BI',
+      service: 'Microsoft Power BI',
+      type: 'OData',
+      statut: 'Active',
+      dateCreation: '2024-02-01',
+      derniereUtilisation: '2024-05-21',
+      permissions: ['read:analytics']
+    }
+  ],
+  webhooks: [
+    {
+      id: 'HOOK-001',
+      nom: 'Notification nouvel employé',
+      url: 'https://api.atlas.local/webhooks/new-employee',
+      evenements: ['employee.created', 'employee.updated'],
+      statut: 'Actif',
+      secret: 'whsec_***************'
+    },
+    {
+      id: 'HOOK-002',
+      nom: 'Sync paie vers comptabilité',
+      url: 'https://api.sage.local/webhooks/payroll',
+      evenements: ['payroll.completed'],
+      statut: 'Actif',
+      secret: 'whsec_***************'
+    }
+  ],
+  connecteursComptables: [
+    {
+      id: 'CONN-001',
+      nom: 'Sage 100 Cloud',
+      type: 'Comptabilité',
+      statut: 'Connecté',
+      dernierSync: '2024-05-20T10:30:00',
+      parametres: {
+        journalPaie: 'JOU-SAL',
+        compteCharges: '6411',
+        compteCotisations: '4370',
+        apiUrl: 'https://api.sage.com/v1'
+      }
+    }
+  ],
+  // MODULE 9 - Portail Employé
+  demandesEmploye: [
+    {
+      id: 'DEM-001',
+      employeeId: 'EMP-008',
+      type: 'Attestation de travail',
+      dateDemande: '2024-05-15',
+      statut: 'Approuvée',
+      dateTraitement: '2024-05-16',
+      traitePar: 'EMP-001',
+      motif: 'Demande banque pour crédit'
+    },
+    {
+      id: 'DEM-002',
+      employeeId: 'EMP-005',
+      type: 'Avance sur salaire',
+      montant: 3000,
+      dateDemande: '2024-05-18',
+      statut: 'En attente',
+      motif: 'Dépense imprévue'
+    },
+    {
+      id: 'DEM-003',
+      employeeId: 'EMP-007',
+      type: 'Modification RIB',
+      nouveauRIB: 'MA640099887766554433221100',
+      dateDemande: '2024-05-10',
+      statut: 'Approuvée',
+      dateTraitement: '2024-05-11',
+      traitePar: 'EMP-002'
+    }
+  ],
+  documentsEmploye: [
+    {
+      id: 'DOCEMP-001',
+      employeeId: 'EMP-001',
+      type: 'Bulletin paie',
+      periode: '2024-05',
+      nom: 'Bulletin_Mai_2024_ELFAKIR.pdf',
+      dateGeneration: '2024-06-05',
+      taille: '245KB'
+    },
+    {
+      id: 'DOCEMP-002',
+      employeeId: 'EMP-001',
+      type: 'Attestation travail',
+      nom: 'Attestation_Travail_ELFAKIR_20240516.pdf',
+      dateGeneration: '2024-05-16',
+      taille: '180KB'
+    }
+  ],
+  // MODULE 10 - Portail Manager
+  validationsManager: [
+    {
+      id: 'VAL-001',
+      managerId: 'EMP-001',
+      type: 'Congé',
+      referenceId: 'LV-001',
+      employeeConcerne: 'EMP-003',
+      dateDemande: '2024-05-10',
+      statut: 'En attente',
+      priorite: 'Normal'
+    },
+    {
+      id: 'VAL-002',
+      managerId: 'EMP-004',
+      type: 'Heures supplémentaires',
+      referenceId: 'HS-001',
+      employeeConcerne: 'EMP-008',
+      dateDemande: '2024-05-12',
+      heures: 8,
+      statut: 'Approuvé',
+      dateValidation: '2024-05-13'
+    }
+  ],
+  budgetsEquipe: [
+    {
+      id: 'BUD-001',
+      managerId: 'EMP-001',
+      departement: 'Ressources Humaines',
+      annee: 2024,
+      budgetTotal: 500000,
+      masseSalariale: 420000,
+      formationsRecrutement: 60000,
+      autresCharges: 20000,
+      consomme: 275000,
+      pourcentageConsommation: 55
+    },
+    {
+      id: 'BUD-002',
+      managerId: 'EMP-004',
+      departement: 'IT',
+      annee: 2024,
+      budgetTotal: 800000,
+      masseSalariale: 520000,
+      infraCloud: 200000,
+      formationsLicences: 80000,
+      consomme: 480000,
+      pourcentageConsommation: 60
+    }
+  ],
+  kpisEquipe: [
+    {
+      managerId: 'EMP-001',
+      mois: '2024-05',
+      effectifEquipe: 3,
+      tauxAbsenteisme: 2.1,
+      heuresSupMoyennes: 1.5,
+      tauxTurnover: 0,
+      satisfactionEquipe: 4.3,
+      objectifsAtteints: 78
+    },
+    {
+      managerId: 'EMP-004',
+      mois: '2024-05',
+      effectifEquipe: 2,
+      tauxAbsenteisme: 0.5,
+      heuresSupMoyennes: 6.2,
+      tauxTurnover: 0,
+      satisfactionEquipe: 4.1,
+      objectifsAtteints: 82
+    }
+  ],
+  // MODULE 13 - Mobilité Interne
+  postesInternes: [
+    {
+      id: 'MOBIL-001',
+      titre: 'Responsable Recrutement',
+      departement: 'Ressources Humaines',
+      etablissement: 'ETB-001',
+      type: 'Promotion',
+      description: 'Piloter la stratégie recrutement et manager l\'équipe',
+      competencesRequises: ['Management', 'Recrutement', 'GPEC'],
+      experienceRequise: '3-5 ans',
+      salaireMin: 15000,
+      salaireMax: 18000,
+      statut: 'Ouvert',
+      datePublication: '2024-05-01',
+      candidaturesInternes: ['EMP-003']
+    },
+    {
+      id: 'MOBIL-002',
+      titre: 'Lead DevOps',
+      departement: 'IT',
+      etablissement: 'ETB-001',
+      type: 'Évolution',
+      description: 'Lead transformation DevOps et Cloud',
+      competencesRequises: ['Azure', 'DevOps', 'Leadership'],
+      experienceRequise: '5+ ans',
+      salaireMin: 25000,
+      salaireMax: 30000,
+      statut: 'Ouvert',
+      datePublication: '2024-04-15',
+      candidaturesInternes: []
+    }
+  ],
+  candidaturesInternes: [
+    {
+      id: 'CINT-001',
+      employeeId: 'EMP-003',
+      posteId: 'MOBIL-001',
+      dateCandidature: '2024-05-05',
+      statut: 'En évaluation',
+      lettreMotivation: 'Je souhaite évoluer vers un poste de management...',
+      supportManager: true,
+      commentaireManager: 'Candidate très qualifiée, recommande vivement'
+    }
+  ],
+  // MODULE 14 - Communication
+  annonces: [
+    {
+      id: 'ANN-001',
+      titre: 'Déploiement Atlas HR Suite',
+      contenu: 'Nous sommes ravis d\'annoncer le déploiement de notre nouvelle plateforme RH Atlas HR Suite...',
+      type: 'Important',
+      auteur: 'EMP-001',
+      datePublication: '2024-05-01',
+      dateFin: '2024-06-01',
+      cible: 'all',
+      priorite: 'Haute',
+      lu: ['EMP-002', 'EMP-004', 'EMP-005']
+    },
+    {
+      id: 'ANN-002',
+      titre: 'Congés été 2024',
+      contenu: 'Pensez à planifier vos congés d\'été avant le 31 mai...',
+      type: 'Information',
+      auteur: 'EMP-001',
+      datePublication: '2024-04-20',
+      dateFin: '2024-05-31',
+      cible: 'all',
+      priorite: 'Moyenne'
+    }
+  ],
+  notifications: [
+    {
+      id: 'NOTIF-001',
+      userId: 'EMP-003',
+      titre: 'Demande de congé approuvée',
+      message: 'Votre demande de congé du 01/06 au 05/06 a été approuvée',
+      type: 'success',
+      date: '2024-05-12T14:30:00',
+      lue: false,
+      lien: '#/conges'
+    },
+    {
+      id: 'NOTIF-002',
+      userId: 'EMP-004',
+      titre: 'Validation en attente',
+      message: 'Heures supplémentaires de Karim Mouline en attente de validation',
+      type: 'info',
+      date: '2024-05-12T09:15:00',
+      lue: true,
+      lien: '#/manager/validations'
+    }
+  ],
+  sondages: [
+    {
+      id: 'SOND-001',
+      titre: 'Satisfaction Déploiement Atlas HR',
+      description: 'Votre avis sur la nouvelle plateforme RH',
+      questions: [
+        {
+          id: 'Q1',
+          texte: 'Êtes-vous satisfait de la nouvelle plateforme?',
+          type: 'rating',
+          echelle: 5
+        },
+        {
+          id: 'Q2',
+          texte: 'Quelles fonctionnalités utilisez-vous le plus?',
+          type: 'multiple',
+          options: ['Congés', 'Bulletins paie', 'Documents', 'Formations']
+        },
+        {
+          id: 'Q3',
+          texte: 'Suggestions d\'amélioration',
+          type: 'text'
+        }
+      ],
+      dateDebut: '2024-05-15',
+      dateFin: '2024-05-31',
+      statut: 'En cours',
+      cible: 'all',
+      reponses: 12,
+      tauxParticipation: 27
+    }
+  ],
+  // MODULE 15 - RGPD & Conformité
+  consentements: [
+    {
+      id: 'CONS-001',
+      employeeId: 'EMP-001',
+      type: 'Traitement données RH',
+      dateConsentement: '2024-01-15',
+      statut: 'Accordé',
+      version: '1.0',
+      documentsLies: ['Politique confidentialité', 'Charte RGPD']
+    },
+    {
+      id: 'CONS-002',
+      employeeId: 'EMP-008',
+      type: 'Photos usage interne',
+      dateConsentement: '2024-03-10',
+      statut: 'Accordé',
+      version: '1.0'
+    }
+  ],
+  demandesPortabilite: [
+    {
+      id: 'PORT-001',
+      employeeId: 'EMP-010',
+      dateDemande: '2024-05-18',
+      statut: 'En cours',
+      typeExport: 'Complet',
+      formatSouhaite: 'JSON'
+    }
+  ],
+  auditsRGPD: [
+    {
+      id: 'AUDIT-001',
+      type: 'Audit annuel RGPD',
+      dateDebut: '2024-03-01',
+      dateFin: '2024-03-15',
+      auditeur: 'Cabinet Juridique Alaoui',
+      statut: 'Complété',
+      score: 92,
+      nonConformites: 2,
+      recommandations: [
+        'Renforcer chiffrement documents sensibles',
+        'Mettre à jour registre traitements'
+      ]
+    }
+  ],
+  registreTraitements: [
+    {
+      id: 'TRAIT-001',
+      nom: 'Gestion administrative personnel',
+      finalite: 'Administration RH et paie',
+      categoriesDonnees: ['Identité', 'Coordonnées', 'Situation familiale', 'Bancaire', 'Santé'],
+      personnesConcernees: 'Salariés',
+      destinataires: ['RH', 'Paie', 'CNSS', 'DGI'],
+      dureeConservation: '5 ans après départ',
+      mesuresSecurite: ['Chiffrement', 'Contrôle accès', 'Logs'],
+      baseJuridique: 'Obligations légales'
+    }
+  ],
+  // MODULE 16 - Workflows Avancés
+  workflows: [
+    {
+      id: 'WF-001',
+      nom: 'Validation congés',
+      type: 'Approbation',
+      etapes: [
+        { ordre: 1, role: 'Manager direct', action: 'Approuver/Refuser', delai: 48 },
+        { ordre: 2, role: 'RH', action: 'Validation finale', delai: 24, condition: 'Si >10 jours' }
+      ],
+      actif: true
+    },
+    {
+      id: 'WF-002',
+      nom: 'Recrutement complet',
+      type: 'Process',
+      etapes: [
+        { ordre: 1, role: 'Recruteur', action: 'Sourcing', delai: 168 },
+        { ordre: 2, role: 'Manager', action: 'Présélection', delai: 72 },
+        { ordre: 3, role: 'Manager', action: 'Entretien', delai: 168 },
+        { ordre: 4, role: 'RH', action: 'Tests/références', delai: 120 },
+        { ordre: 5, role: 'Direction', action: 'Validation offre', delai: 48 },
+        { ordre: 6, role: 'RH', action: 'Onboarding', delai: 240 }
+      ],
+      actif: true
+    },
+    {
+      id: 'WF-003',
+      nom: 'Note de frais',
+      type: 'Approbation',
+      etapes: [
+        { ordre: 1, role: 'Manager', action: 'Validation', delai: 48 },
+        { ordre: 2, role: 'Finance', action: 'Contrôle', delai: 72, condition: 'Si >5000 MAD' },
+        { ordre: 3, role: 'Direction', action: 'Approbation', delai: 24, condition: 'Si >10000 MAD' }
+      ],
+      actif: true
+    }
+  ],
+  instancesWorkflow: [
+    {
+      id: 'WFI-001',
+      workflowId: 'WF-001',
+      referenceId: 'LV-001',
+      dateDebut: '2024-05-10',
+      statut: 'En cours',
+      etapeCourante: 1,
+      historique: [
+        { etape: 1, acteur: 'EMP-001', action: 'En attente', date: '2024-05-10T10:00:00' }
+      ]
+    }
+  ],
+  escalades: [
+    {
+      id: 'ESC-001',
+      workflowInstanceId: 'WFI-001',
+      raison: 'Délai dépassé',
+      dateEscalade: '2024-05-13',
+      niveauEscalade: 1,
+      escaladeVers: 'EMP-001',
+      statut: 'Ouverte'
+    }
   ]
 };
