@@ -1,114 +1,63 @@
 <!DOCTYPE html>
 <html lang="fr" data-theme="light">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atlas HR Suite – Prototype Fluent</title>
+    <title>Atlas HR Suite - SIRH Complet</title>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="assets/css/app.css" />
     <script type="module" src="https://unpkg.com/@fluentui/web-components@2.5.6/dist/web-components.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.4.0/docx.umd.min.js" integrity="sha512-IvVdWvVManIeZDV4SSQdlqzTeWY5Avzkdxl3pNGdisz8Iky3Uczdlz7YT1Do1B4ezgmO6ijLJrVN6aL5soNqdQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha256-/smZFxLpy0X58F3RrgPf63eNbUsVTNff7kwh28ykPHk=" crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <div id="app">
-      <header class="app-header" role="banner">
-        <div class="app-brand">
-          <span class="brand-mark" aria-hidden="true">◆</span>
-          <div>
-            <span class="brand-title">Atlas HR Suite</span>
-            <span class="brand-subtitle" data-i18n="brand.subtitle">Gestion RH 360°</span>
-          </div>
+    <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="brand">
+            <span class="brand-icon">◆</span>
+            <div>
+                <h1 class="brand-title">Atlas HR Suite</h1>
+                <p class="brand-subtitle">Plateforme SIRH Complète</p>
+            </div>
         </div>
-        <div class="header-middle">
-          <fluent-breadcrumb aria-label="Fil d'Ariane de navigation">
-            <fluent-breadcrumb-item href="#/">Tableau de bord</fluent-breadcrumb-item>
-            <fluent-breadcrumb-item id="breadcrumb-current" current></fluent-breadcrumb-item>
-          </fluent-breadcrumb>
-          <fluent-search id="app-search" placeholder="Rechercher" aria-label="Rechercher"></fluent-search>
-          <div class="header-highlights" aria-hidden="true">
-            <span>CNSS / Damancom</span>
-            <span>SIMPL‑IR XML</span>
-            <span>FR • AR • RTL</span>
-          </div>
+
+        <div class="header-center">
+            <fluent-breadcrumb id="breadcrumb"></fluent-breadcrumb>
         </div>
+
         <div class="header-actions">
-          <fluent-button id="themeToggle" appearance="transparent" aria-label="Basculer le thème">
-            <span data-i18n="theme.light">Clair</span>
-          </fluent-button>
-          <fluent-button id="excelModeToggle" appearance="transparent" aria-label="Mode Excel">Mode Excel</fluent-button>
-          <fluent-button id="langToggle" appearance="transparent" aria-label="Changer de langue">
-            FR / AR
-          </fluent-button>
-          <fluent-avatar id="userAvatar" name="A. Admin" aria-label="Utilisateur"></fluent-avatar>
+            <fluent-button id="themeBtn" appearance="transparent" title="Changer le thème">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm0 1.5v13a6.5 6.5 0 0 0 0-13Z"/>
+                </svg>
+            </fluent-button>
+            <fluent-button id="exportBtn" appearance="accent">Exporter</fluent-button>
+            <fluent-avatar name="Admin" color="colorful"></fluent-avatar>
         </div>
-      </header>
-      <div class="ribbon" role="toolbar" aria-label="Ruban">
-        <fluent-tabs id="ribbonTabs" activeid="onglet-accueil">
-          <fluent-tab id="onglet-accueil">Accueil</fluent-tab>
-          <fluent-tab id="onglet-donnees">Données</fluent-tab>
-          <fluent-tab id="onglet-macros">Macros</fluent-tab>
-          <fluent-tab-panel>
-            <div class="ribbon-groups">
-              <div class="ribbon-group" aria-label="Navigation rapide">
-                <fluent-button appearance="accent" data-goto="#/">Tableau de bord</fluent-button>
-                <fluent-button appearance="accent" data-goto="#/recrutement">Recrutement</fluent-button>
-                <fluent-button appearance="accent" data-goto="#/salaries">Salariés</fluent-button>
-                <fluent-button appearance="accent" data-goto="#/paie">Paie</fluent-button>
-              </div>
-            </div>
-          </fluent-tab-panel>
-          <fluent-tab-panel>
-            <div class="ribbon-groups">
-              <div class="ribbon-group" aria-label="Exports">
-                <fluent-button id="rbExportEmployees" appearance="accent">Export salariés (XLSX)</fluent-button>
-                <fluent-button id="rbExportDataset" appearance="stealth">Exporter jeu JSON</fluent-button>
-              </div>
-              <div class="ribbon-group" aria-label="Imports">
-                <fluent-button id="rbImportDataset" appearance="stealth">Importer jeu JSON</fluent-button>
-                <input type="file" id="rbImportFile" accept="application/json" hidden />
-              </div>
-            </div>
-          </fluent-tab-panel>
-          <fluent-tab-panel>
-            <div class="ribbon-groups">
-              <div class="ribbon-group" aria-label="Macros">
-                <fluent-button id="rbRunPayroll" appearance="accent">Recalculer paie</fluent-button>
-                <fluent-button id="rbOfferLetter" appearance="stealth">Lettre d'offre</fluent-button>
-                <fluent-button id="rbRecordMacro" appearance="stealth">Enregistrer macro</fluent-button>
-              </div>
-            </div>
-          </fluent-tab-panel>
-        </fluent-tabs>
-      </div>
-      <div class="app-shell">
-        <nav class="app-nav" aria-label="Navigation principale">
-          <div id="sideNav" class="nav-list" role="list"></div>
-          <div class="nav-footer">
-            <fluent-button id="exportData" appearance="accent" icon="arrow-export-20-regular">
-              <span data-i18n="nav.export">Exporter données</span>
+    </header>
+
+    <!-- Navigation Sidebar -->
+    <nav class="app-nav">
+        <div id="navMenu" class="nav-menu"></div>
+        <div class="nav-footer">
+            <fluent-button appearance="stealth" class="nav-item">
+                <span>⚙️ Paramètres</span>
             </fluent-button>
-            <fluent-button id="importData" appearance="stealth">
-              <span data-i18n="nav.import">Importer données</span>
-              <input type="file" id="importFile" accept="application/json" hidden />
-            </fluent-button>
-          </div>
-        </nav>
-        <main id="app-content" role="main" tabindex="-1"></main>
-      </div>
-      <div class="sheet-tabs" aria-label="Feuilles">
-        <fluent-tabs id="sheetTabs" activeid="tab-dashboard">
-          <fluent-tab id="tab-dashboard" data-route="#/">Tableau de bord</fluent-tab>
-          <fluent-tab id="tab-recrutement" data-route="#/recrutement">Recrutement</fluent-tab>
-          <fluent-tab id="tab-salaries" data-route="#/salaries">Salariés</fluent-tab>
-          <fluent-tab id="tab-paie" data-route="#/paie">Paie</fluent-tab>
-          <fluent-tab id="tab-docs" data-route="#/documents">Documents</fluent-tab>
-        </fluent-tabs>
-      </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="appContent" class="app-content">
+        <!-- Dynamic content loaded here -->
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+        <fluent-progress-ring></fluent-progress-ring>
     </div>
-    <div id="toast-corner" role="status" aria-live="polite"></div>
-    <fluent-dialog id="genericDialog" hidden></fluent-dialog>
+
     <script type="module" src="assets/js/app.js"></script>
-    <script type="module" src="assets/js/ribbon.js"></script>
-  </body>
+    <script src="assets/js/routes.js"></script>
+</body>
 </html>
