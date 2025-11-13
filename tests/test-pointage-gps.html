@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tests Pointage GPS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .test-section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: #34495e;
+      margin-top: 0;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      font-size: 14px;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    button.success {
+      background-color: #27ae60;
+    }
+    button.warning {
+      background-color: #f39c12;
+    }
+    button.danger {
+      background-color: #e74c3c;
+    }
+    .result {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 10px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .success-message {
+      color: #27ae60;
+      font-weight: bold;
+    }
+    .error-message {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    .warning-message {
+      color: #f39c12;
+      font-weight: bold;
+    }
+    .info {
+      background-color: #d1ecf1;
+      border-left: 4px solid #0c5460;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .warning {
+      background-color: #fff3cd;
+      border-left: 4px solid #856404;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    input, select {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 200px;
+    }
+    .form-group {
+      margin: 10px 0;
+    }
+    label {
+      display: inline-block;
+      width: 150px;
+      font-weight: bold;
+    }
+    .map-container {
+      height: 400px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+    .location-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin: 2px;
+    }
+    .location-valid {
+      background-color: #27ae60;
+      color: white;
+    }
+    .location-invalid {
+      background-color: #e74c3c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>📍 Tests du Système de Pointage GPS</h1>
+
+  <div class="info">
+    <strong>Objectif:</strong> Tester le système de pointage avec géolocalisation GPS, validation de périmètre, et détection d'anomalies.
+  </div>
+
+  <!-- Test 1: Localisation GPS en temps réel -->
+  <div class="test-section">
+    <h2>🌍 Test 1: Géolocalisation en Temps Réel</h2>
+    <p>Tester la capture de position GPS et la validation du périmètre</p>
+
+    <button onclick="getCurrentGPS()">📡 Obtenir Ma Position GPS</button>
+    <button onclick="testGPSPermissions()">🔒 Vérifier Permissions</button>
+    <button onclick="simulateGPS()">🎭 Simuler Position GPS</button>
+
+    <div id="gps-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Test 2: Validation des Bureaux -->
+  <div class="test-section">
+    <h2>🏢 Test 2: Configuration des Bureaux</h2>
+    <p>Afficher et tester les localisations de bureaux configurées</p>
+
+    <button onclick="showOfficeLocations()">📍 Afficher Bureaux</button>
+    <button onclick="testAllOfficeLocations()">✅ Tester Validations</button>
+    <button onclick="calculateDistances()">📏 Calculer Distances</button>
+
+    <div id="office-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Test 3: Pointage Check-In -->
+  <div class="test-section">
+    <h2>🔵 Test 3: Pointage d'Entrée (Check-In)</h2>
+    <p>Simuler un pointage d'entrée avec différents scénarios</p>
+
+    <div class="form-group">
+      <label>Latitude:</label>
+      <input type="number" id="checkin-lat" value="33.5731" step="0.0001">
+    </div>
+
+    <div class="form-group">
+      <label>Longitude:</label>
+      <input type="number" id="checkin-lng" value="-7.5898" step="0.0001">
+    </div>
+
+    <div class="form-group">
+      <label>Heure:</label>
+      <input type="time" id="checkin-time" value="08:30">
+    </div>
+
+    <button onclick="testCheckIn(false)">✅ Check-In Normal</button>
+    <button class="warning" onclick="testCheckIn(true)">⏰ Check-In en Retard</button>
+    <button class="danger" onclick="testCheckInOutOfRange()">🚫 Hors Périmètre</button>
+
+    <div id="checkin-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Test 4: Pointage Check-Out -->
+  <div class="test-section">
+    <h2>🔴 Test 4: Pointage de Sortie (Check-Out)</h2>
+    <p>Simuler un pointage de sortie avec calcul d'heures</p>
+
+    <div class="form-group">
+      <label>Heure:</label>
+      <input type="time" id="checkout-time" value="17:30">
+    </div>
+
+    <button onclick="testCheckOut(false)">✅ Check-Out Normal</button>
+    <button class="warning" onclick="testCheckOut(true)">⏰ Départ Anticipé</button>
+    <button class="success" onclick="testCheckOutOvertime()">💪 Heures Supplémentaires</button>
+
+    <div id="checkout-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Test 5: Détection d'Anomalies -->
+  <div class="test-section">
+    <h2>⚠️ Test 5: Détection d'Anomalies</h2>
+    <p>Tester la détection automatique des anomalies de pointage</p>
+
+    <button onclick="testRetards()">⏰ Tester Retards</button>
+    <button onclick="testDepartsAnticipes()">🏃 Tester Départs Anticipés</button>
+    <button onclick="testGPSAnomalies()">📍 Tester Anomalies GPS</button>
+    <button class="danger" onclick="testAllAnomalies()">🔥 Tout Tester</button>
+
+    <div id="anomalies-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Test 6: Statistiques -->
+  <div class="test-section">
+    <h2>📊 Test 6: Calcul de Statistiques</h2>
+    <p>Tester le calcul des statistiques de pointage sur une période</p>
+
+    <div class="form-group">
+      <label>Date début:</label>
+      <input type="date" id="stats-start" value="2025-01-01">
+    </div>
+
+    <div class="form-group">
+      <label>Date fin:</label>
+      <input type="date" id="stats-end" value="2025-01-31">
+    </div>
+
+    <button onclick="calculateTimeStats()">📊 Calculer Statistiques</button>
+    <button onclick="generateReport()">📄 Générer Rapport</button>
+    <button class="success" onclick="runFullTest()">🚀 Test Complet</button>
+
+    <div id="stats-result" class="result" style="display:none;"></div>
+  </div>
+
+  <script type="module">
+    import {
+      timeTrackingConfig,
+      validateGPSLocation,
+      checkIn,
+      checkOut,
+      calculateTimeStats,
+      getCurrentLocation
+    } from '../assets/js/services/advancedTimeTracking.js';
+
+    // Exposer les fonctions globalement
+    window.timeTrackingConfig = timeTrackingConfig;
+    window.validateGPSLocation = validateGPSLocation;
+    window.checkIn = checkIn;
+    window.checkOut = checkOut;
+    window.calculateTimeStats = calculateTimeStats;
+    window.getCurrentLocation = getCurrentLocation;
+
+    // Variables globales pour les tests
+    let currentCheckInId = null;
+    let testAttendanceRecords = [];
+
+    window.getCurrentGPS = async function() {
+      const resultDiv = document.getElementById('gps-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="warning-message">📡 Demande de géolocalisation en cours...</span>';
+
+      try {
+        const position = await getCurrentLocation();
+
+        const validation = validateGPSLocation(position.latitude, position.longitude);
+
+        resultDiv.innerHTML = `
+<span class="success-message">✅ Position GPS obtenue avec succès!</span>
+
+📍 Coordonnées:
+   • Latitude: ${position.latitude.toFixed(6)}
+   • Longitude: ${position.longitude.toFixed(6)}
+   • Précision: ${position.accuracy.toFixed(2)} mètres
+   • Altitude: ${position.altitude ? position.altitude.toFixed(2) + ' m' : 'Non disponible'}
+   • Timestamp: ${position.timestamp}
+
+${validation.valid ?
+  `<span class="success-message">✅ Position VALIDE - ${validation.location}</span>
+   📏 Distance du bureau: ${validation.distance} mètres` :
+  `<span class="error-message">❌ Position INVALIDE</span>
+   ⚠️ ${validation.message}
+   📏 Distance du bureau le plus proche (${validation.closestLocation}): ${validation.distance} mètres`}
+        `;
+
+      } catch (error) {
+        resultDiv.innerHTML = `<span class="error-message">❌ Erreur: ${error.message}</span>
+
+💡 Astuces:
+   • Vérifiez que la géolocalisation est activée dans votre navigateur
+   • Autorisez l'accès à votre position quand demandé
+   • Vérifiez que vous êtes en HTTPS (requis pour la géolocalisation)
+        `;
+      }
+    };
+
+    window.testGPSPermissions = async function() {
+      const resultDiv = document.getElementById('gps-result');
+      resultDiv.style.display = 'block';
+
+      const checks = [
+        { test: 'Navigateur supporte la géolocalisation', pass: !!navigator.geolocation },
+        { test: 'Connexion sécurisée (HTTPS)', pass: window.location.protocol === 'https:' || window.location.hostname === 'localhost' },
+        { test: 'API Permissions disponible', pass: !!navigator.permissions }
+      ];
+
+      let permissionStatus = 'Non testé';
+      if (navigator.permissions) {
+        try {
+          const result = await navigator.permissions.query({ name: 'geolocation' });
+          permissionStatus = result.state;
+          checks.push({ test: 'Permission géolocalisation', pass: result.state === 'granted' });
+        } catch (e) {
+          checks.push({ test: 'Permission géolocalisation', pass: false });
+        }
+      }
+
+      resultDiv.innerHTML = `
+<span class="success-message">🔒 Vérification des permissions GPS:</span>
+
+${checks.map(c => `${c.pass ? '✅' : '❌'} ${c.test}`).join('\n')}
+
+📊 État de la permission: ${permissionStatus}
+
+${checks.every(c => c.pass) ?
+  '<span class="success-message">✨ Toutes les vérifications sont passées!</span>' :
+  `<span class="warning-message">⚠️ Certaines vérifications ont échoué
+
+💡 Si la géolocalisation ne fonctionne pas:
+   • Utilisez HTTPS ou localhost
+   • Autorisez la géolocalisation dans les paramètres du navigateur
+   • Vérifiez les paramètres de localisation de votre appareil</span>`}
+      `;
+    };
+
+    window.simulateGPS = function() {
+      const offices = timeTrackingConfig.gps.officeLocations;
+      const selectedOffice = offices[0]; // Casablanca par défaut
+
+      document.getElementById('checkin-lat').value = selectedOffice.lat;
+      document.getElementById('checkin-lng').value = selectedOffice.lng;
+
+      const resultDiv = document.getElementById('gps-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `
+<span class="success-message">🎭 Position GPS simulée!</span>
+
+📍 Bureau sélectionné: ${selectedOffice.name}
+   • Latitude: ${selectedOffice.lat}
+   • Longitude: ${selectedOffice.lng}
+   • Rayon autorisé: ${selectedOffice.radius} mètres
+
+✅ Les coordonnées ont été remplies dans le formulaire de check-in
+      `;
+    };
+
+    window.showOfficeLocations = function() {
+      const offices = timeTrackingConfig.gps.officeLocations;
+
+      let output = '<span class="success-message">🏢 Bureaux configurés:</span>\n\n';
+      output += '<table>\n';
+      output += '<tr><th>Nom</th><th>Latitude</th><th>Longitude</th><th>Rayon (m)</th></tr>\n';
+
+      offices.forEach(office => {
+        output += `<tr>
+          <td>${office.name}</td>
+          <td>${office.lat}</td>
+          <td>${office.lng}</td>
+          <td>${office.radius}</td>
+        </tr>\n`;
+      });
+
+      output += '</table>\n';
+
+      const resultDiv = document.getElementById('office-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = output;
+    };
+
+    window.testAllOfficeLocations = function() {
+      const offices = timeTrackingConfig.gps.officeLocations;
+      let output = '<span class="success-message">✅ Test de validation pour chaque bureau:</span>\n\n';
+
+      offices.forEach(office => {
+        // Test au centre
+        const validCenter = validateGPSLocation(office.lat, office.lng, offices);
+
+        // Test à 50m (devrait passer)
+        const lat50 = office.lat + (50 / 111320); // Approximation
+        const validNear = validateGPSLocation(lat50, office.lng, offices);
+
+        // Test à 200m (devrait échouer)
+        const lat200 = office.lat + (200 / 111320);
+        const invalidFar = validateGPSLocation(lat200, office.lng, offices);
+
+        output += `\n📍 ${office.name}:\n`;
+        output += `   ${validCenter.valid ? '✅' : '❌'} Centre (0m): ${validCenter.message}\n`;
+        output += `   ${validNear.valid ? '✅' : '❌'} Proche (50m): ${validNear.message}\n`;
+        output += `   ${!invalidFar.valid ? '✅' : '❌'} Loin (200m): ${invalidFar.message}\n`;
+      });
+
+      const resultDiv = document.getElementById('office-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = output;
+    };
+
+    window.calculateDistances = function() {
+      const offices = timeTrackingConfig.gps.officeLocations;
+      let output = '<span class="success-message">📏 Distances entre les bureaux:</span>\n\n';
+
+      for (let i = 0; i < offices.length; i++) {
+        for (let j = i + 1; j < offices.length; j++) {
+          const validation = validateGPSLocation(
+            offices[i].lat,
+            offices[i].lng,
+            [offices[j]]
+          );
+
+          output += `📌 ${offices[i].name} ↔ ${offices[j].name}: ${validation.distance} mètres\n`;
+        }
+      }
+
+      const resultDiv = document.getElementById('office-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = output;
+    };
+
+    window.testCheckIn = async function(isLate) {
+      const lat = parseFloat(document.getElementById('checkin-lat').value);
+      const lng = parseFloat(document.getElementById('checkin-lng').value);
+      const timeStr = document.getElementById('checkin-time').value;
+
+      // Créer une date avec l'heure spécifiée
+      const now = new Date();
+      const [hours, minutes] = timeStr.split(':');
+      const checkInTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(hours), parseInt(minutes));
+
+      // Si test de retard, ajouter du délai
+      if (isLate) {
+        checkInTime.setMinutes(checkInTime.getMinutes() + 45); // 45 min de retard
+      }
+
+      try {
+        // Simuler le check-in
+        const result = await checkIn('emp_test_001', {
+          gps: {
+            latitude: lat,
+            longitude: lng,
+            accuracy: 10,
+            altitude: null
+          },
+          device: {
+            type: 'web',
+            model: 'Test Device'
+          }
+        });
+
+        // Modifier le timestamp pour notre test
+        result.timestamp = checkInTime.toISOString();
+        result.time = checkInTime.toTimeString().split(' ')[0];
+
+        currentCheckInId = result.id;
+        testAttendanceRecords.push(result);
+
+        const hasErrors = result.anomalies.filter(a => a.severity === 'error').length > 0;
+        const hasWarnings = result.anomalies.filter(a => a.severity === 'warning').length > 0;
+
+        const resultDiv = document.getElementById('checkin-result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+<span class="${hasErrors ? 'error-message' : 'success-message'}">
+${hasErrors ? '❌' : '✅'} Check-In ${result.validated ? 'VALIDÉ' : 'NON VALIDÉ'}
+</span>
+
+📋 Détails du pointage:
+   • ID: ${result.id}
+   • Employé: ${result.employeeId}
+   • Date: ${result.date}
+   • Heure: ${result.time}
+   • Type: ${result.type}
+
+📍 Géolocalisation:
+   • Latitude: ${result.gps.latitude}
+   • Longitude: ${result.gps.longitude}
+   • Précision: ${result.gps.accuracy} m
+   • Validé GPS: ${result.gps.validated ? '✅' : '❌'}
+   • Localisation: ${result.gps.location || 'Non validée'}
+
+⚠️ Anomalies détectées: ${result.anomalies.length}
+${result.anomalies.map(a => `   ${a.severity === 'error' ? '❌' : a.severity === 'warning' ? '⚠️' : 'ℹ️'} [${a.type}] ${a.message}`).join('\n')}
+
+${result.validated ?
+  '<span class="success-message">✅ Pointage prêt à être enregistré</span>' :
+  '<span class="warning-message">⚠️ Pointage nécessite une validation manuelle</span>'}
+        `;
+
+      } catch (error) {
+        document.getElementById('checkin-result').innerHTML =
+          `<span class="error-message">❌ Erreur: ${error.message}</span>`;
+        document.getElementById('checkin-result').style.display = 'block';
+      }
+    };
+
+    window.testCheckInOutOfRange = async function() {
+      // Coordonnées hors de tout bureau (exemple: en pleine mer)
+      const lat = 35.0;
+      const lng = -8.0;
+
+      document.getElementById('checkin-lat').value = lat;
+      document.getElementById('checkin-lng').value = lng;
+
+      await testCheckIn(false);
+    };
+
+    window.testCheckOut = async function(isEarly) {
+      if (!currentCheckInId) {
+        const resultDiv = document.getElementById('checkout-result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = '<span class="error-message">❌ Vous devez d\'abord faire un check-in!</span>';
+        return;
+      }
+
+      const timeStr = document.getElementById('checkout-time').value;
+      const now = new Date();
+      const [hours, minutes] = timeStr.split(':');
+      const checkOutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(hours), parseInt(minutes));
+
+      if (isEarly) {
+        checkOutTime.setHours(15, 30); // Départ à 15h30 (anticipé)
+      }
+
+      try {
+        const result = await checkOut('emp_test_001', currentCheckInId, {
+          gps: {
+            latitude: 33.5731,
+            longitude: -7.5898,
+            accuracy: 10
+          },
+          device: {
+            type: 'web'
+          }
+        });
+
+        result.timestamp = checkOutTime.toISOString();
+        result.time = checkOutTime.toTimeString().split(' ')[0];
+
+        testAttendanceRecords.push(result);
+
+        // Calculer les heures travaillées
+        const checkInRecord = testAttendanceRecords.find(r => r.id === currentCheckInId);
+        const hoursWorked = (checkOutTime - new Date(checkInRecord.timestamp)) / (1000 * 60 * 60);
+
+        const resultDiv = document.getElementById('checkout-result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+<span class="${result.validated ? 'success-message' : 'warning-message'}">
+${result.validated ? '✅' : '⚠️'} Check-Out ${result.validated ? 'VALIDÉ' : 'NON VALIDÉ'}
+</span>
+
+📋 Détails du pointage:
+   • ID: ${result.id}
+   • Check-In ID: ${result.checkInId}
+   • Date: ${result.date}
+   • Heure: ${result.time}
+
+⏱️ Temps de travail:
+   • Heures travaillées: ${hoursWorked.toFixed(2)} heures
+   • Heure d'arrivée: ${checkInRecord.time}
+   • Heure de départ: ${result.time}
+
+📍 Géolocalisation:
+   • Validé GPS: ${result.gps.validated ? '✅' : '❌'}
+
+⚠️ Anomalies détectées: ${result.anomalies.length}
+${result.anomalies.map(a => `   ${a.severity === 'error' ? '❌' : a.severity === 'warning' ? '⚠️' : 'ℹ️'} [${a.type}] ${a.message}`).join('\n')}
+        `;
+
+      } catch (error) {
+        document.getElementById('checkout-result').innerHTML =
+          `<span class="error-message">❌ Erreur: ${error.message}</span>`;
+        document.getElementById('checkout-result').style.display = 'block';
+      }
+    };
+
+    window.testCheckOutOvertime = async function() {
+      if (!currentCheckInId) {
+        const resultDiv = document.getElementById('checkout-result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = '<span class="error-message">❌ Vous devez d\'abord faire un check-in!</span>';
+        return;
+      }
+
+      document.getElementById('checkout-time').value = '19:30'; // Heures sup
+      await testCheckOut(false);
+    };
+
+    window.testRetards = async function() {
+      const retards = [5, 20, 45, 90]; // minutes de retard
+      let output = '<span class="success-message">⏰ Test des retards:</span>\n\n';
+
+      for (const retard of retards) {
+        const checkInTime = new Date();
+        checkInTime.setHours(8, 0 + retard, 0); // 8h00 + retard
+
+        const result = await checkIn('emp_test', {
+          gps: { latitude: 33.5731, longitude: -7.5898, accuracy: 10 }
+        });
+
+        result.timestamp = checkInTime.toISOString();
+        result.time = checkInTime.toTimeString().split(' ')[0];
+
+        const lateAnomaly = result.anomalies.find(a => a.type === 'LATE_ARRIVAL');
+
+        output += `\n⏰ Arrivée à ${result.time} (${retard} min de retard):\n`;
+        output += `   ${lateAnomaly ? '⚠️ Retard détecté: ' + lateAnomaly.message : '✅ Pas de retard'}\n`;
+        output += `   Sévérité: ${lateAnomaly ? lateAnomaly.severity : 'N/A'}\n`;
+      }
+
+      const resultDiv = document.getElementById('anomalies-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = output;
+    };
+
+    window.testDepartsAnticipes = async function() {
+      const heuresDepart = ['15:00', '16:00', '16:45', '17:10'];
+      let output = '<span class="success-message">🏃 Test des départs anticipés:</span>\n\n';
+
+      for (const heure of heuresDepart) {
+        const checkOutTime = new Date();
+        const [h, m] = heure.split(':');
+        checkOutTime.setHours(parseInt(h), parseInt(m), 0);
+
+        const result = await checkOut('emp_test', 'checkin_123', {
+          gps: { latitude: 33.5731, longitude: -7.5898, accuracy: 10 }
+        });
+
+        result.timestamp = checkOutTime.toISOString();
+        result.time = checkOutTime.toTimeString().split(' ')[0];
+
+        const earlyAnomaly = result.anomalies.find(a => a.type === 'EARLY_DEPARTURE');
+
+        output += `\n🕐 Départ à ${result.time}:\n`;
+        output += `   ${earlyAnomaly ? '⚠️ Départ anticipé: ' + earlyAnomaly.message : '✅ Horaire normal'}\n`;
+      }
+
+      const resultDiv = document.getElementById('anomalies-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = output;
+    };
+
+    window.testGPSAnomalies = async function() {
+      const positions = [
+        { name: 'Au bureau (Casablanca)', lat: 33.5731, lng: -7.5898, shouldPass: true },
+        { name: 'À 50m du bureau', lat: 33.5736, lng: -7.5898, shouldPass: true },
+        { name: 'À 150m du bureau', lat: 33.5745, lng: -7.5898, shouldPass: false },
+        { name: 'Hors zone', lat: 35.0, lng: -8.0, shouldPass: false }
+      ];
+
+      let output = '<span class="success-message">📍 Test des anomalies GPS:</span>\n\n';
+
+      for (const pos of positions) {
+        const result = await checkIn('emp_test', {
+          gps: { latitude: pos.lat, longitude: pos.lng, accuracy: 10 }
+        });
+
+        const gpsAnomaly = result.anomalies.find(a => a.type === 'GPS_OUT_OF_RANGE');
+
+        output += `\n📌 ${pos.name}:\n`;
+        output += `   GPS validé: ${result.gps.validated ? '✅' : '❌'}\n`;
+        output += `   ${gpsAnomaly ? '⚠️ ' + gpsAnomaly.message : '✅ Position valide'}\n`;
+        output += `   Test réussi: ${pos.shouldPass === !gpsAnomaly ? '✅' : '❌'}\n`;
+      }
+
+      const resultDiv = document.getElementById('anomalies-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = output;
+    };
+
+    window.testAllAnomalies = async function() {
+      const resultDiv = document.getElementById('anomalies-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="warning-message">🔥 Exécution de tous les tests d\'anomalies...</span>';
+
+      await testRetards();
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      const current = resultDiv.innerHTML;
+      await testDepartsAnticipes();
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      await testGPSAnomalies();
+    };
+
+    window.calculateTimeStats = function() {
+      // Générer des données de test pour un mois
+      const startDate = new Date(document.getElementById('stats-start').value);
+      const endDate = new Date(document.getElementById('stats-end').value);
+
+      // Créer des enregistrements factices
+      const records = [];
+      for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        // Sauter les weekends
+        if (d.getDay() === 0 || d.getDay() === 6) continue;
+
+        const dateStr = d.toISOString().split('T')[0];
+
+        // Check-in (avec parfois du retard)
+        const checkInTime = new Date(d);
+        checkInTime.setHours(8, Math.random() < 0.3 ? 5 + Math.floor(Math.random() * 40) : 0);
+
+        records.push({
+          id: `ci_${dateStr}`,
+          employeeId: 'emp_test',
+          type: 'CHECK_IN',
+          date: dateStr,
+          timestamp: checkInTime.toISOString(),
+          anomalies: checkInTime.getHours() >= 8 && checkInTime.getMinutes() > 15 ?
+            [{ type: 'LATE_ARRIVAL', severity: 'warning', minutes: checkInTime.getMinutes() }] : []
+        });
+
+        // Check-out
+        const checkOutTime = new Date(d);
+        checkOutTime.setHours(17, Math.random() < 0.2 ? 30 + Math.floor(Math.random() * 120) : 0);
+
+        records.push({
+          id: `co_${dateStr}`,
+          employeeId: 'emp_test',
+          type: 'CHECK_OUT',
+          date: dateStr,
+          timestamp: checkOutTime.toISOString(),
+          anomalies: checkOutTime.getHours() >= 18 ?
+            [{ type: 'OVERTIME', severity: 'info', minutes: (checkOutTime.getHours() - 17) * 60 + checkOutTime.getMinutes() }] : []
+        });
+      }
+
+      const stats = calculateTimeStats(records, startDate, endDate);
+
+      const resultDiv = document.getElementById('stats-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `
+<span class="success-message">📊 Statistiques de pointage:</span>
+
+📅 Période: ${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}
+
+📈 Présence:
+   • Jours ouvrables: ${stats.totalDays}
+   • Jours présents: ${stats.presentDays}
+   • Jours absents: ${stats.absentDays}
+   • Taux de présence: ${((stats.presentDays / stats.totalDays) * 100).toFixed(1)}%
+
+⏰ Ponctualité:
+   • Jours en retard: ${stats.lateDays}
+   • Départs anticipés: ${stats.earlyDepartures}
+   • Taux de ponctualité: ${(((stats.presentDays - stats.lateDays) / stats.presentDays) * 100).toFixed(1)}%
+
+💼 Heures de travail:
+   • Total heures travaillées: ${stats.totalHoursWorked.toFixed(1)} heures
+   • Moyenne par jour: ${stats.averageHoursPerDay ? stats.averageHoursPerDay.toFixed(2) : '0'} heures
+   • Heures supplémentaires: ${(stats.totalOvertimeMinutes / 60).toFixed(1)} heures
+
+⚠️ Anomalies:
+   • Total anomalies: ${stats.anomalies.total}
+   • Par type: ${Object.entries(stats.anomalies.byType).map(([type, count]) => `\n      ${type}: ${count}`).join('')}
+      `;
+    };
+
+    window.generateReport = function() {
+      calculateTimeStats();
+
+      const resultDiv = document.getElementById('stats-result');
+      const content = resultDiv.innerHTML;
+
+      resultDiv.innerHTML = content + `
+
+<span class="success-message">📄 Rapport généré!</span>
+
+💡 Actions suggérées:
+   ${testAttendanceRecords.filter(r => r.anomalies.some(a => a.type === 'LATE_ARRIVAL')).length > 5 ?
+     '⚠️ Nombre élevé de retards - Considérer un rappel des horaires' :
+     '✅ Ponctualité satisfaisante'}
+
+   ${testAttendanceRecords.filter(r => r.anomalies.some(a => a.type === 'GPS_OUT_OF_RANGE')).length > 0 ?
+     '📍 Anomalies GPS détectées - Vérifier les périmètres configurés' :
+     '✅ Tous les pointages GPS sont conformes'}
+      `;
+    };
+
+    window.runFullTest = async function() {
+      const resultDiv = document.getElementById('stats-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="success-message">🚀 Exécution du test complet...</span>\n\n';
+
+      const tests = [
+        { name: 'Vérification permissions GPS', fn: () => testGPSPermissions() },
+        { name: 'Affichage des bureaux', fn: () => showOfficeLocations() },
+        { name: 'Test check-in normal', fn: () => testCheckIn(false) },
+        { name: 'Test check-out normal', fn: () => testCheckOut(false) },
+        { name: 'Test anomalies', fn: () => testAllAnomalies() },
+        { name: 'Calcul statistiques', fn: () => calculateTimeStats() }
+      ];
+
+      for (const test of tests) {
+        try {
+          await test.fn();
+          resultDiv.innerHTML += `✅ ${test.name}\n`;
+        } catch (error) {
+          resultDiv.innerHTML += `❌ ${test.name}: ${error.message}\n`;
+        }
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+
+      resultDiv.innerHTML += '\n<span class="success-message">✨ Test complet terminé!</span>';
+    };
+  </script>
+</body>
+</html>
