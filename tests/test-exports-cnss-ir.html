@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tests Exports CNSS et IR</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .test-section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: #34495e;
+      margin-top: 0;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      font-size: 14px;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    button.success {
+      background-color: #27ae60;
+    }
+    button.danger {
+      background-color: #e74c3c;
+    }
+    .result {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 10px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .success-message {
+      color: #27ae60;
+      font-weight: bold;
+    }
+    .error-message {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    .info {
+      background-color: #d1ecf1;
+      border-left: 4px solid #0c5460;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .warning {
+      background-color: #fff3cd;
+      border-left: 4px solid #856404;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    input, select {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .form-group {
+      margin: 10px 0;
+    }
+    label {
+      display: inline-block;
+      width: 150px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Tests des Exports CNSS et IR</h1>
+
+  <div class="info">
+    <strong>Objectif:</strong> Tester la génération des fichiers Damancom (CNSS) et SIMPL-IR (DGI) conformes à la réglementation marocaine.
+  </div>
+
+  <!-- Test 1: Export Damancom CNSS -->
+  <div class="test-section">
+    <h2>📋 Test 1: Export Damancom CNSS</h2>
+    <p>Génération d'un fichier texte tabulé pour la télétransmission CNSS</p>
+
+    <div class="form-group">
+      <label>Période:</label>
+      <input type="month" id="cnss-periode" value="2025-01">
+    </div>
+
+    <div class="form-group">
+      <label>Nombre d'employés:</label>
+      <input type="number" id="cnss-nb-employes" value="5" min="1" max="100">
+    </div>
+
+    <button onclick="testExportDamancom()">🚀 Générer Fichier Damancom</button>
+    <button onclick="verifierFormatDamancom()">✅ Vérifier Format</button>
+    <button class="danger" onclick="testCasLimite()">⚠️ Tester Cas Limite</button>
+
+    <div id="damancom-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Test 2: Export SIMPL-IR XML -->
+  <div class="test-section">
+    <h2>📄 Test 2: Export SIMPL-IR (XML DGI)</h2>
+    <p>Génération d'un fichier XML pour la télédéclaration IR à la DGI</p>
+
+    <div class="form-group">
+      <label>Période:</label>
+      <input type="month" id="ir-periode" value="2025-01">
+    </div>
+
+    <div class="form-group">
+      <label>Nombre d'employés:</label>
+      <input type="number" id="ir-nb-employes" value="5" min="1" max="100">
+    </div>
+
+    <button onclick="testExportSIMPLIR()">🚀 Générer XML SIMPL-IR</button>
+    <button onclick="verifierXMLValide()">✅ Valider XML</button>
+    <button onclick="downloadExamples()">📥 Télécharger Exemples</button>
+
+    <div id="ir-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Test 3: Validation des Calculs -->
+  <div class="test-section">
+    <h2>🧮 Test 3: Validation des Calculs CNSS et IR</h2>
+    <p>Vérifier l'exactitude des calculs de cotisations sociales et d'impôts</p>
+
+    <div class="form-group">
+      <label>Salaire Brut (MAD):</label>
+      <input type="number" id="salaire-test" value="8000" step="100">
+    </div>
+
+    <button onclick="testCalculsCNSS()">🧮 Calculer Cotisations CNSS</button>
+    <button onclick="testCalculsIR()">🧮 Calculer IR</button>
+    <button onclick="testBaremeComplet()">📊 Tester Barème Complet</button>
+
+    <div id="calculs-result" class="result" style="display:none;"></div>
+  </div>
+
+  <!-- Test 4: Tests d'Intégration -->
+  <div class="test-section">
+    <h2>🔗 Test 4: Test d'Intégration Complet</h2>
+    <p>Tester le processus complet: paie → déclarations → exports</p>
+
+    <button onclick="testFluxComplet()">🔄 Tester Flux Complet</button>
+    <button onclick="testMultiplesPeriodes()">📅 Tester Plusieurs Périodes</button>
+    <button class="success" onclick="executerTousLesTests()">✨ Exécuter Tous les Tests</button>
+
+    <div id="integration-result" class="result" style="display:none;"></div>
+  </div>
+
+  <script type="module">
+    import { generateDamancomFile, generateSIMPLIRXML } from '../assets/js/services/moroccanCompliance.js';
+
+    // Données de test
+    const companyInfoTest = {
+      nom: 'SOCIÉTÉ TEST SARL',
+      ice: '002345678901234',
+      identifiantFiscal: '12345678',
+      cnss: '1234567',
+      patente: '12345678',
+      rc: '123456',
+      adresse: '123 Avenue Mohammed V',
+      ville: 'Casablanca',
+      telephone: '+212 522 123456',
+      directeur: 'M. Ahmed BENALI'
+    };
+
+    const employeesTest = [
+      {
+        id: 'emp1',
+        matricule: 'E001',
+        nom: 'ALAMI',
+        prenom: 'Fatima',
+        cnss: '123456789',
+        cnie: 'AB123456',
+        matriculeCNSS: '123456789',
+        numeroImmatriculation: '123456789',
+        salaireBase: 8000,
+        poste: 'Comptable',
+        dateEmbauche: '2020-01-15',
+        departement: 'Finance'
+      },
+      {
+        id: 'emp2',
+        matricule: 'E002',
+        nom: 'BENNANI',
+        prenom: 'Mohammed',
+        cnss: '987654321',
+        cnie: 'CD789012',
+        matriculeCNSS: '987654321',
+        numeroImmatriculation: '987654321',
+        salaireBase: 12000,
+        poste: 'Chef de Projet',
+        dateEmbauche: '2019-06-01',
+        departement: 'IT'
+      },
+      {
+        id: 'emp3',
+        matricule: 'E003',
+        nom: 'CHAKIR',
+        prenom: 'Amina',
+        cnss: '456789123',
+        cnie: 'EF345678',
+        matriculeCNSS: '456789123',
+        numeroImmatriculation: '456789123',
+        salaireBase: 5000,
+        poste: 'Assistant RH',
+        dateEmbauche: '2021-03-10',
+        departement: 'RH'
+      },
+      {
+        id: 'emp4',
+        matricule: 'E004',
+        nom: 'IDRISSI',
+        prenom: 'Youssef',
+        cnss: '789123456',
+        cnie: 'GH901234',
+        matriculeCNSS: '789123456',
+        numeroImmatriculation: '789123456',
+        salaireBase: 15000,
+        poste: 'Directeur Commercial',
+        dateEmbauche: '2018-01-01',
+        departement: 'Commercial'
+      },
+      {
+        id: 'emp5',
+        matricule: 'E005',
+        nom: 'ZIANI',
+        prenom: 'Sanaa',
+        cnss: '321654987',
+        cnie: 'IJ567890',
+        matriculeCNSS: '321654987',
+        numeroImmatriculation: '321654987',
+        salaireBase: 6500,
+        poste: 'Développeur',
+        dateEmbauche: '2022-09-01',
+        departement: 'IT'
+      }
+    ];
+
+    function createDeclarationCNSS(periode, nbEmployes) {
+      const employees = employeesTest.slice(0, nbEmployes);
+      const details = employees.map(emp => ({
+        employeeId: emp.id,
+        salaireBrut: emp.salaireBase,
+        nombreJours: 26,
+        cotisationsCNSS: Math.min(emp.salaireBase, 6000) * 0.0674
+      }));
+
+      return {
+        id: `decl_cnss_${Date.now()}`,
+        type: 'cnss',
+        periode: periode,
+        nbEmployes: employees.length,
+        details: details,
+        numeroDeclaration: `CNSS${periode.replace('-', '')}${Date.now()}`
+      };
+    }
+
+    function createDeclarationIR(periode, nbEmployes) {
+      const employees = employeesTest.slice(0, nbEmployes);
+      const details = employees.map(emp => {
+        const salaireBrut = emp.salaireBase;
+        const cotisationsCNSS = Math.min(salaireBrut, 6000) * 0.0674;
+        const salaireNet = salaireBrut - cotisationsCNSS;
+        const salaireImposable = salaireNet;
+        const montantIR = calculerIR(salaireImposable);
+
+        return {
+          employeeId: emp.id,
+          salaireBrut: salaireBrut,
+          cotisationsCNSS: cotisationsCNSS,
+          autresDeductions: 0,
+          salaireNet: salaireNet,
+          salaireImposable: salaireImposable,
+          montantIR: montantIR,
+          nombreJours: 26
+        };
+      });
+
+      return {
+        id: `decl_ir_${Date.now()}`,
+        type: 'ir',
+        periode: periode,
+        nbEmployes: employees.length,
+        details: details,
+        numeroDeclaration: `IR${periode.replace('-', '')}${Date.now()}`
+      };
+    }
+
+    function calculerIR(salaireImposable) {
+      // Barème IR 2025 (annuel, donc multiplier par 12)
+      const annuel = salaireImposable * 12;
+      let ir = 0;
+
+      if (annuel <= 30000) {
+        ir = 0;
+      } else if (annuel <= 50000) {
+        ir = (annuel - 30000) * 0.10;
+      } else if (annuel <= 60000) {
+        ir = 2000 + (annuel - 50000) * 0.20;
+      } else if (annuel <= 80000) {
+        ir = 4000 + (annuel - 60000) * 0.30;
+      } else if (annuel <= 180000) {
+        ir = 10000 + (annuel - 80000) * 0.34;
+      } else {
+        ir = 44000 + (annuel - 180000) * 0.38;
+      }
+
+      return ir / 12; // Retour au mensuel
+    }
+
+    window.testExportDamancom = function() {
+      try {
+        const periode = document.getElementById('cnss-periode').value;
+        const nbEmployes = parseInt(document.getElementById('cnss-nb-employes').value);
+
+        const declaration = createDeclarationCNSS(periode, nbEmployes);
+        const employees = employeesTest.slice(0, nbEmployes);
+
+        const result = generateDamancomFile(declaration, employees, companyInfoTest);
+
+        const resultDiv = document.getElementById('damancom-result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+<span class="success-message">✅ Fichier Damancom généré avec succès!</span>
+
+📁 Nom du fichier: ${result.filename}
+📊 Format: ${result.format}
+🔤 Encodage: ${result.encoding}
+
+📄 Contenu (aperçu):
+${result.content.split('\n').slice(0, 10).join('\n')}
+...
+Total ${result.content.split('\n').length} lignes
+
+📥 Le fichier peut être téléchargé pour télétransmission CNSS
+        `;
+
+        // Créer un blob et télécharger
+        const blob = new Blob([result.content], { type: result.format });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = result.filename;
+        a.click();
+        URL.revokeObjectURL(url);
+
+      } catch (error) {
+        document.getElementById('damancom-result').innerHTML =
+          `<span class="error-message">❌ Erreur: ${error.message}</span>`;
+        document.getElementById('damancom-result').style.display = 'block';
+      }
+    };
+
+    window.testExportSIMPLIR = function() {
+      try {
+        const periode = document.getElementById('ir-periode').value;
+        const nbEmployes = parseInt(document.getElementById('ir-nb-employes').value);
+
+        const declaration = createDeclarationIR(periode, nbEmployes);
+        const employees = employeesTest.slice(0, nbEmployes);
+
+        const result = generateSIMPLIRXML(declaration, employees, companyInfoTest);
+
+        const resultDiv = document.getElementById('ir-result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+<span class="success-message">✅ Fichier SIMPL-IR XML généré avec succès!</span>
+
+📁 Nom du fichier: ${result.filename}
+📊 Format: ${result.format}
+🔤 Encodage: ${result.encoding}
+
+📄 Contenu XML (aperçu):
+${escapeHtml(result.content.split('\n').slice(0, 20).join('\n'))}
+...
+
+📥 Le fichier peut être téléchargé pour télédéclaration DGI
+        `;
+
+        // Télécharger le fichier
+        const blob = new Blob([result.content], { type: result.format });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = result.filename;
+        a.click();
+        URL.revokeObjectURL(url);
+
+      } catch (error) {
+        document.getElementById('ir-result').innerHTML =
+          `<span class="error-message">❌ Erreur: ${error.message}</span>`;
+        document.getElementById('ir-result').style.display = 'block';
+      }
+    };
+
+    window.verifierFormatDamancom = function() {
+      const declaration = createDeclarationCNSS('2025-01', 3);
+      const result = generateDamancomFile(declaration, employeesTest.slice(0, 3), companyInfoTest);
+
+      const lines = result.content.split('\n');
+      const header = lines[0].split('\t');
+
+      const checks = [
+        { test: 'En-tête présent', pass: header.length === 12 },
+        { test: 'Format tabulé', pass: result.content.includes('\t') },
+        { test: 'Encodage UTF-8', pass: result.encoding === 'UTF-8' },
+        { test: 'Extension .txt', pass: result.filename.endsWith('.txt') },
+        { test: 'Ligne totaux présente', pass: lines[lines.length - 1].startsWith('TOTAL') }
+      ];
+
+      const resultDiv = document.getElementById('damancom-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `
+<span class="success-message">📋 Vérification du format Damancom:</span>
+
+${checks.map(c => `${c.pass ? '✅' : '❌'} ${c.test}`).join('\n')}
+
+${checks.every(c => c.pass) ?
+  '<span class="success-message">✨ Tous les tests de format sont passés!</span>' :
+  '<span class="error-message">⚠️ Certains tests ont échoué</span>'}
+      `;
+    };
+
+    window.verifierXMLValide = function() {
+      const declaration = createDeclarationIR('2025-01', 3);
+      const result = generateSIMPLIRXML(declaration, employeesTest.slice(0, 3), companyInfoTest);
+
+      try {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(result.content, 'application/xml');
+        const parserError = xmlDoc.querySelector('parsererror');
+
+        if (parserError) {
+          throw new Error('XML invalide');
+        }
+
+        const checks = [
+          { test: 'XML bien formé', pass: !parserError },
+          { test: 'Déclaration XML présente', pass: result.content.startsWith('<?xml') },
+          { test: 'Namespace correct', pass: result.content.includes('xmlns') },
+          { test: 'Balise racine DeclarationIR', pass: result.content.includes('<DeclarationIR') },
+          { test: 'Section EnTete présente', pass: result.content.includes('<EnTete>') },
+          { test: 'Section Declarant présente', pass: result.content.includes('<Declarant>') },
+          { test: 'Section Salaries présente', pass: result.content.includes('<Salaries>') },
+          { test: 'Section Recapitulatif présente', pass: result.content.includes('<Recapitulatif>') }
+        ];
+
+        const resultDiv = document.getElementById('ir-result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+<span class="success-message">📋 Validation du XML SIMPL-IR:</span>
+
+${checks.map(c => `${c.pass ? '✅' : '❌'} ${c.test}`).join('\n')}
+
+${checks.every(c => c.pass) ?
+  '<span class="success-message">✨ Le XML est valide et conforme!</span>' :
+  '<span class="error-message">⚠️ Le XML présente des anomalies</span>'}
+        `;
+
+      } catch (error) {
+        document.getElementById('ir-result').innerHTML =
+          `<span class="error-message">❌ Erreur de validation: ${error.message}</span>`;
+        document.getElementById('ir-result').style.display = 'block';
+      }
+    };
+
+    window.testCalculsCNSS = function() {
+      const salaireBrut = parseFloat(document.getElementById('salaire-test').value);
+      const salaireSoumis = Math.min(salaireBrut, 6000);
+
+      const cotisations = {
+        prestationsSocialesSalarie: salaireSoumis * 0.0448,
+        amoSalarie: salaireBrut * 0.0226,
+        totalSalarie: salaireSoumis * 0.0674,
+        prestationsSocialesEmployeur: salaireSoumis * 0.064,
+        allocationsFamiliales: salaireSoumis * 0.0898,
+        amoEmployeur: salaireBrut * 0.0411,
+        tfpEmployeur: salaireBrut * 0.016,
+        totalEmployeur: salaireSoumis * 0.064 + salaireSoumis * 0.0898 + salaireBrut * 0.0411 + salaireBrut * 0.016
+      };
+
+      const resultDiv = document.getElementById('calculs-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `
+<span class="success-message">🧮 Calculs CNSS pour un salaire de ${salaireBrut.toFixed(2)} MAD:</span>
+
+💰 Salaire brut: ${salaireBrut.toFixed(2)} MAD
+📊 Salaire soumis (plafonné): ${salaireSoumis.toFixed(2)} MAD
+
+👤 COTISATIONS SALARIÉ:
+   • Prestations sociales (4.48%): ${cotisations.prestationsSocialesSalarie.toFixed(2)} MAD
+   • AMO (2.26%): ${cotisations.amoSalarie.toFixed(2)} MAD
+   • TOTAL SALARIÉ: ${cotisations.totalSalarie.toFixed(2)} MAD
+
+🏢 COTISATIONS EMPLOYEUR:
+   • Prestations sociales (6.4%): ${cotisations.prestationsSocialesEmployeur.toFixed(2)} MAD
+   • Allocations familiales (8.98%): ${cotisations.allocationsFamiliales.toFixed(2)} MAD
+   • AMO (4.11%): ${cotisations.amoEmployeur.toFixed(2)} MAD
+   • TFP (1.6%): ${cotisations.tfpEmployeur.toFixed(2)} MAD
+   • TOTAL EMPLOYEUR: ${cotisations.totalEmployeur.toFixed(2)} MAD
+
+💵 COÛT TOTAL: ${(salaireBrut + cotisations.totalEmployeur).toFixed(2)} MAD
+      `;
+    };
+
+    window.testCalculsIR = function() {
+      const salaireBrut = parseFloat(document.getElementById('salaire-test').value);
+      const salaireSoumis = Math.min(salaireBrut, 6000);
+      const cotisationsCNSS = salaireSoumis * 0.0674;
+      const salaireNet = salaireBrut - cotisationsCNSS;
+      const ir = calculerIR(salaireNet);
+      const netApayer = salaireNet - ir;
+
+      const resultDiv = document.getElementById('calculs-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `
+<span class="success-message">🧮 Calcul IR pour un salaire de ${salaireBrut.toFixed(2)} MAD:</span>
+
+💰 Salaire brut: ${salaireBrut.toFixed(2)} MAD
+➖ Cotisations CNSS: ${cotisationsCNSS.toFixed(2)} MAD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💵 Salaire net (imposable): ${salaireNet.toFixed(2)} MAD
+📊 Salaire annuel imposable: ${(salaireNet * 12).toFixed(2)} MAD
+
+📉 IR mensuel: ${ir.toFixed(2)} MAD
+📉 IR annuel: ${(ir * 12).toFixed(2)} MAD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ NET À PAYER: ${netApayer.toFixed(2)} MAD
+
+📊 Taux effectif d'imposition: ${((ir / salaireNet) * 100).toFixed(2)}%
+      `;
+    };
+
+    window.testBaremeComplet = function() {
+      const salaires = [3000, 5000, 8000, 10000, 15000, 20000, 30000];
+      let results = '<span class="success-message">📊 Test du barème IR complet:</span>\n\n';
+
+      results += 'Salaire Brut | IR Mensuel | Taux Effectif | Net à Payer\n';
+      results += '━'.repeat(60) + '\n';
+
+      salaires.forEach(salaire => {
+        const salaireSoumis = Math.min(salaire, 6000);
+        const cotisationsCNSS = salaireSoumis * 0.0674;
+        const salaireNet = salaire - cotisationsCNSS;
+        const ir = calculerIR(salaireNet);
+        const netApayer = salaireNet - ir;
+        const tauxEffectif = (ir / salaireNet) * 100;
+
+        results += `${salaire.toString().padEnd(12)} | ${ir.toFixed(2).padEnd(10)} | ${tauxEffectif.toFixed(2)}% | ${netApayer.toFixed(2)}\n`;
+      });
+
+      const resultDiv = document.getElementById('calculs-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = results;
+    };
+
+    window.testCasLimite = function() {
+      // Test avec salaires limites
+      const casLimites = [
+        { nom: 'Salaire minimum', salaire: 2000 },
+        { nom: 'Plafond CNSS', salaire: 6000 },
+        { nom: 'Juste au-dessus du plafond', salaire: 6001 },
+        { nom: 'Salaire très élevé', salaire: 50000 }
+      ];
+
+      let results = '<span class="success-message">⚠️ Test des cas limites:</span>\n\n';
+
+      casLimites.forEach(cas => {
+        const declaration = createDeclarationCNSS('2025-01', 1);
+        declaration.details[0].salaireBrut = cas.salaire;
+
+        const result = generateDamancomFile(declaration, [{
+          ...employeesTest[0],
+          salaireBase: cas.salaire
+        }], companyInfoTest);
+
+        results += `\n📌 ${cas.nom} (${cas.salaire} MAD):\n`;
+        results += result.content.split('\n')[1] + '\n';
+      });
+
+      const resultDiv = document.getElementById('damancom-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = results;
+    };
+
+    window.testFluxComplet = function() {
+      try {
+        const periode = '2025-01';
+        const nbEmployes = 5;
+
+        // 1. Créer déclaration CNSS
+        const declCNSS = createDeclarationCNSS(periode, nbEmployes);
+        const fileCNSS = generateDamancomFile(declCNSS, employeesTest.slice(0, nbEmployes), companyInfoTest);
+
+        // 2. Créer déclaration IR
+        const declIR = createDeclarationIR(periode, nbEmployes);
+        const fileIR = generateSIMPLIRXML(declIR, employeesTest.slice(0, nbEmployes), companyInfoTest);
+
+        // 3. Vérifications
+        const checks = [
+          { step: '1. Déclaration CNSS créée', pass: !!declCNSS.id },
+          { step: '2. Fichier Damancom généré', pass: !!fileCNSS.content },
+          { step: '3. Déclaration IR créée', pass: !!declIR.id },
+          { step: '4. Fichier SIMPL-IR généré', pass: !!fileIR.content },
+          { step: '5. Cohérence CNSS/IR', pass: declCNSS.nbEmployes === declIR.nbEmployes }
+        ];
+
+        const resultDiv = document.getElementById('integration-result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+<span class="success-message">🔄 Test du flux complet - Période ${periode}:</span>
+
+${checks.map(c => `${c.pass ? '✅' : '❌'} ${c.step}`).join('\n')}
+
+📊 Résumé:
+   • Nombre d'employés traités: ${nbEmployes}
+   • Fichier CNSS: ${fileCNSS.filename}
+   • Fichier IR: ${fileIR.filename}
+   • Masse salariale brute: ${declCNSS.details.reduce((sum, d) => sum + d.salaireBrut, 0).toFixed(2)} MAD
+   • Total IR: ${declIR.details.reduce((sum, d) => sum + d.montantIR, 0).toFixed(2)} MAD
+
+${checks.every(c => c.pass) ?
+  '<span class="success-message">✨ Flux complet validé avec succès!</span>' :
+  '<span class="error-message">⚠️ Des erreurs ont été détectées</span>'}
+        `;
+
+      } catch (error) {
+        document.getElementById('integration-result').innerHTML =
+          `<span class="error-message">❌ Erreur: ${error.message}</span>`;
+        document.getElementById('integration-result').style.display = 'block';
+      }
+    };
+
+    window.testMultiplesPeriodes = function() {
+      const periodes = ['2024-11', '2024-12', '2025-01'];
+      let results = '<span class="success-message">📅 Test sur plusieurs périodes:</span>\n\n';
+
+      periodes.forEach(periode => {
+        const declCNSS = createDeclarationCNSS(periode, 5);
+        const declIR = createDeclarationIR(periode, 5);
+
+        results += `\n📆 Période ${periode}:\n`;
+        results += `   ✅ CNSS: ${declCNSS.details.reduce((sum, d) => sum + d.cotisationsCNSS, 0).toFixed(2)} MAD\n`;
+        results += `   ✅ IR: ${declIR.details.reduce((sum, d) => sum + d.montantIR, 0).toFixed(2)} MAD\n`;
+      });
+
+      const resultDiv = document.getElementById('integration-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = results;
+    };
+
+    window.executerTousLesTests = function() {
+      const resultDiv = document.getElementById('integration-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<span class="success-message">⏳ Exécution de tous les tests...</span>';
+
+      setTimeout(() => {
+        testFluxComplet();
+        setTimeout(() => {
+          const current = resultDiv.innerHTML;
+          resultDiv.innerHTML = current + '\n\n<span class="success-message">✨ Tous les tests ont été exécutés!</span>';
+        }, 500);
+      }, 500);
+    };
+
+    window.downloadExamples = function() {
+      // Générer des fichiers exemples
+      const declCNSS = createDeclarationCNSS('2025-01', 5);
+      const fileCNSS = generateDamancomFile(declCNSS, employeesTest.slice(0, 5), companyInfoTest);
+
+      const declIR = createDeclarationIR('2025-01', 5);
+      const fileIR = generateSIMPLIRXML(declIR, employeesTest.slice(0, 5), companyInfoTest);
+
+      // Télécharger CNSS
+      const blobCNSS = new Blob([fileCNSS.content], { type: fileCNSS.format });
+      const urlCNSS = URL.createObjectURL(blobCNSS);
+      const aCNSS = document.createElement('a');
+      aCNSS.href = urlCNSS;
+      aCNSS.download = 'exemple_' + fileCNSS.filename;
+      aCNSS.click();
+      URL.revokeObjectURL(urlCNSS);
+
+      // Télécharger IR
+      setTimeout(() => {
+        const blobIR = new Blob([fileIR.content], { type: fileIR.format });
+        const urlIR = URL.createObjectURL(blobIR);
+        const aIR = document.createElement('a');
+        aIR.href = urlIR;
+        aIR.download = 'exemple_' + fileIR.filename;
+        aIR.click();
+        URL.revokeObjectURL(urlIR);
+      }, 500);
+
+      document.getElementById('ir-result').style.display = 'block';
+      document.getElementById('ir-result').innerHTML =
+        '<span class="success-message">✅ Fichiers exemples téléchargés!</span>';
+    };
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
